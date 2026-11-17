@@ -1,0 +1,39 @@
+# Deploy config for the marketplace order worker.
+#
+# One-time setup:
+#   wrangler d1 create frydge-marketplace
+#     → paste the returned database_id below
+#   wrangler d1 execute frydge-marketplace --file=schema-marketplace.sql --remote
+#
+# Secrets:
+#   wrangler secret put STRIPE_SECRET_KEY     -c wrangler-marketplace.toml
+#   wrangler secret put STRIPE_WEBHOOK_SECRET -c wrangler-marketplace.toml
+#   wrangler secret put FRYDGE_RELAY_KEY      -c wrangler-marketplace.toml
+#
+# Deploy:
+#   wrangler deploy -c wrangler-marketplace.toml
+#
+# Deliberately a SEPARATE worker from /stripe/*, which is currently served by an
+# older build under an unidentified script name. New route, no collision.
+
+name = "frydge2-marketplace"
+main = "cloudflare-worker-marketplace.js"
+compatibility_date = "2026-05-25"
+
+routes = [
+  { pattern = "frydge2.com/marketplace/*", zone_name = "frydge2.com" }
+]
+
+# Marketplace launch gate, served by GET /marketplace/config and read by
+# MarketplaceAvailability in the app. App Store builds hide every marketplace
+# entry point while this is anything other than "true". Debug and TestFlight
+# builds ignore it (always on). Flip to "true" and `wrangler deploy` to launch.
+[vars]
+MARKETPLACE_ENABLED = "false"
+
+# binding = "DB" must stay as-is — the worker reads `env.DB`. Cloudflare's
+# `d1 create` output suggests `frydge_marketplace`; ignore that, or change both.
+[[d1_databases]]
+binding = "DB"
+database_name = "frydge-marketplace"
+database_id = "a0fcde9b-7c50-408e-8de1-018235bb56a8"

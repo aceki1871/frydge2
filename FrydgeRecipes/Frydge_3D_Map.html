@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frydge — 3D Code Map</title>
+<style>
+  :root{
+    color-scheme: dark;
+    --bg:#0d0d0f; --panel:#16161a; --panel-2:#1e1e24; --line:#2b2b33; --line-2:#3a3a45;
+    --ink:#f2f2f4; --ink-2:#a9a9b4; --ink-3:#74747f;
+    --live:#3b8ff0; --risk:#ff5c56; --dead:#6f6f7a; --store:#25c48c; --host:#f0b23a;
+  }
+  @media (prefers-color-scheme: light){
+    :root:where(:not([data-theme="dark"])){
+      color-scheme: light;
+      --bg:#f6f6f4; --panel:#ffffff; --panel-2:#f0efec; --line:#e0dfda; --line-2:#c9c8c1;
+      --ink:#111112; --ink-2:#55555e; --ink-3:#8b8b93;
+      --live:#2a78d6; --risk:#c0342f; --dead:#9a9aa2; --store:#12a273; --host:#c98500;
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);overflow:hidden;
+    font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  #stage{position:fixed;inset:0}
+  canvas{display:block;width:100%;height:100%;cursor:grab;touch-action:none}
+  canvas.drag{cursor:grabbing}
+
+  .hud{position:fixed;pointer-events:none}
+  .hud > *{pointer-events:auto}
+
+  #top{top:0;left:0;right:0;padding:14px 16px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+  .title{font-size:16px;font-weight:700;letter-spacing:-.01em;line-height:1.25}
+  .title small{display:block;font-size:11.5px;font-weight:400;color:var(--ink-3);letter-spacing:0}
+
+  .group{display:flex;gap:5px;flex-wrap:wrap;align-items:center;
+    background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:4px}
+  .btn{
+    font:inherit;font-size:12px;padding:5px 11px;border-radius:99px;cursor:pointer;
+    border:1px solid transparent;background:transparent;color:var(--ink-2);white-space:nowrap;
+  }
+  .btn:hover{color:var(--ink);background:var(--panel-2)}
+  .btn.on{background:var(--ink);color:var(--bg);font-weight:600}
+  .btn .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:1px}
+
+  #left{right:16px;bottom:16px;width:236px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .card h3{margin:0 0 8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+  .lg{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2);margin-bottom:5px}
+  .lg i{width:9px;height:9px;border-radius:50%;display:inline-block;flex:0 0 9px}
+  .lg i.sq{border-radius:2px}
+  .sliderow{display:flex;align-items:center;gap:9px;margin-top:10px;font-size:12px;color:var(--ink-2)}
+  input[type=range]{flex:1;accent-color:var(--live)}
+
+  #right{right:16px;top:78px;width:310px;max-height:calc(100% - 360px);overflow:auto}
+  #detail{display:none}
+  #detail.show{display:block}
+  #detail .fname{font-size:15px;font-weight:700;word-break:break-word;margin-bottom:2px}
+  #detail .frole{font-size:13px;color:var(--ink-2);margin-bottom:10px}
+  #detail dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:5px 10px;font-size:12.5px}
+  #detail dt{color:var(--ink-3);white-space:nowrap}
+  #detail dd{margin:0;color:var(--ink-2);word-break:break-word}
+  .pill{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.05em;padding:2px 7px;
+    border-radius:4px;margin-bottom:8px}
+  .why{margin-top:10px;font-size:12.5px;font-style:italic;color:var(--risk);line-height:1.45}
+  .hint{font-size:12.5px;color:var(--ink-3);line-height:1.5}
+
+  #tip{
+    position:fixed;pointer-events:none;background:var(--panel);border:1px solid var(--line-2);
+    border-radius:8px;padding:6px 10px;font-size:12.5px;white-space:nowrap;display:none;z-index:9;
+    box-shadow:0 8px 24px -12px rgba(0,0,0,.6)
+  }
+  #tip b{font-weight:650}
+  #tip span{color:var(--ink-3)}
+  @media (max-width:900px){
+    #right{display:none}
+    #left{width:196px;left:16px;right:auto}
+  }
+</style>
+</head>
+<body>
+<div id="stage"><canvas id="c"></canvas></div>
+
+<div class="hud" id="top">
+  <div class="title">Frydge — 3D code map
+    <small>120 nodes · 255 links · drag to orbit, scroll to zoom, click a node</small>
+  </div>
+  <div class="group" id="filters">
+    <button class="btn on" data-f="ALL">All</button>
+    <button class="btn" data-f="LIVE"><i class="dot" style="background:var(--live)"></i>Live</button>
+    <button class="btn" data-f="RISK"><i class="dot" style="background:var(--risk)"></i>Risk</button>
+    <button class="btn" data-f="DEAD"><i class="dot" style="background:var(--dead)"></i>Dead</button>
+  </div>
+  <div class="group">
+    <button class="btn on" id="spin">Auto-rotate</button>
+    <button class="btn" id="reset">Reset view</button>
+  </div>
+</div>
+
+<div class="hud" id="left">
+  <div class="card">
+    <h3>Floors</h3>
+    <div class="lg"><i style="background:var(--live)"></i>App shell &amp; navigation</div>
+    <div class="lg"><i style="background:var(--live)"></i>Views</div>
+    <div class="lg"><i style="background:var(--live)"></i>Managers &amp; services</div>
+    <div class="lg"><i style="background:var(--live)"></i>Models</div>
+    <div class="lg"><i class="sq" style="background:var(--store)"></i>Data stores</div>
+    <div class="lg"><i class="sq" style="background:var(--host)"></i>External hosts</div>
+    <div class="sliderow"><span>Spread</span><input id="spread" type="range" min="60" max="300" value="118"></div>
+  </div>
+</div>
+
+<div class="hud" id="right">
+  <div class="card" id="detail"></div>
+  <div class="card" id="intro">
+    <h3>What you're looking at</h3>
+    <p class="hint">Every file in the project, stacked by architectural floor. A line is a real reference:
+    one file using another, or a file reading and writing a store or calling a host.</p>
+    <p class="hint">Red nodes and red lines are the things that stop this shipping. Grey nodes are the
+    46 files nothing references — spin the map and look at how much of it is grey.</p>
+  </div>
+</div>
+
+<div id="tip"></div>
+
+<script>
+const DATA = {"nodes":[{"id":"FrydgeRecipesApp.swift","l":"FrydgeRecipesApp","k":"file","y":5,"s":"LIVE","sub":"ENTRY","m":{"role":"@main scene; URL/share routing, root sheets, CloudKit subscription priming","why":"","per":"CKPrivate;CKShared","net":"CloudKit","dep":"AppState;FrydgeManager;ShoppingListManager;SharedFridgeManager;PendingInvites"}},{"id":"RecipesApp.swift","l":"RecipesApp","k":"file","y":5,"s":"DUPLICATE","sub":"ENTRY","m":{"role":"Legacy App struct wrapping ContentView","why":"Superseded by FrydgeRecipesApp; has no @main, never runs","per":"none","net":"none","dep":"ContentView;AppDelegate"}},{"id":"AppDelegateWrapper.swift","l":"AppDelegateWrapper","k":"file","y":5,"s":"RISK","sub":"INFRA","m":{"role":"AppDelegate/SceneDelegate: push, geofences, background tasks, share intake","why":"Requests Always location and background updates at launch \u2014 5.1.1/5.1.2 rejection","per":"AppGroup;UserDefaults","net":"CloudKit, APNs","dep":"NetworkMonitor;Networking;SharedShoppingListManager;SharedFridgeManager;RegionMonitoring"}},{"id":"AppState.swift","l":"AppState","k":"file","y":5,"s":"LIVE","sub":"NAV","m":{"role":"Observable app state: selected tab, pending import URL","why":"","per":"none","net":"none","dep":"MainTabView"}},{"id":"ContentView.swift","l":"ContentView","k":"file","y":5,"s":"RISK","sub":"ENTRY","m":{"role":"Root gate: Sign in with Apple, CloudKit status, tabs","why":"Forces Apple sign-in with no guest path; unscoped public-DB Recipe query","per":"UserDefaults;CKPublic","net":"CloudKit","dep":"MainTabView;AppState;PendingInvites"}},{"id":"MainTableView.swift","l":"MainTableView","k":"file","y":5,"s":"RISK","sub":"NAV","m":{"role":"Custom four-tab bar switching main feature views","why":"No NavigationStack, so GoLocalView's navigationDestination never fires","per":"none","net":"none","dep":"AppState;RecipeListView;ShoppingListView;FrydgeView;GoLocalView"}},{"id":"HomeView.swift","l":"HomeView","k":"file","y":5,"s":"UNREFERENCED","sub":"NAV","m":{"role":"Alternate TabView shell with barcode scanner cover","why":"ContentView uses MainTabView instead; duplicate shell nothing instantiates","per":"none","net":"none","dep":"RecipeListView;ShoppingListView;FrydgeView;BarcodeScannerView"}},{"id":"SignInHandler.swift","l":"SignInHandler","k":"file","y":3,"s":"UNREFERENCED","sub":"INFRA","m":{"role":"Face ID / Touch ID biometric authentication helper singleton","why":"No caller; app authenticates via Sign in with Apple","per":"none","net":"none","dep":"-"}},{"id":"ProfileView.swift","l":"ProfileView","k":"file","y":4,"s":"RISK","sub":"SHARING","m":{"role":"Profile: iCloud status, shared memberships, leave share, delete account","why":"deleteAllRecipesFromCloud deletes every user's public Recipe records, unscoped","per":"CKShared;CKPublic","net":"CloudKit","dep":"-"}},{"id":"PersistenceController.swift","l":"PersistenceController","k":"file","y":3,"s":"UNREFERENCED","sub":"INFRA","m":{"role":"Core Data stack for FrydgeRecipesCoreData store","why":"Nothing injects the container; fatalError on store load failure","per":"CoreData","net":"none","dep":"-"}},{"id":"Models.swift","l":"Models","k":"file","y":2,"s":"LIVE","sub":"MODEL","m":{"role":"Store, PlacesResponse and SharedShoppingListItem value types","why":"","per":"none","net":"none","dep":"-"}},{"id":"FrydgeItem.swift","l":"FrydgeItem","k":"file","y":2,"s":"UNREFERENCED","sub":"MODEL","m":{"role":"Simple fridge item struct: name, quantity, expiry, location","why":"Superseded by StoredIngredient and SharedFrydgeItem","per":"none","net":"none","dep":"-"}},{"id":"FrydgeManager.swift","l":"FrydgeManager","k":"file","y":3,"s":"LIVE","sub":"FRIDGE","m":{"role":"Fridge inventory: local JSON cache, CloudKit sync, tombstones, expiry alerts","why":"","per":"FileSystem;UserDefaults;CKPrivate","net":"CloudKit","dep":"NetworkMonitor"}},{"id":"FridgeView.swift","l":"FridgeView","k":"file","y":4,"s":"LIVE","sub":"FRIDGE","m":{"role":"Main frydge screen: list, inline edit, delete, move to shared","why":"","per":"FileSystem;CKPrivate;CKShared","net":"world.openfoodfacts.org, CloudKit","dep":"FrydgeManager;SharedFridgeManager;ProductDetailsView;StockAvailability;ProductImageCacheManager"}},{"id":"AddIngredientView.swift","l":"AddIngredientView","k":"file","y":4,"s":"UNREFERENCED","sub":"RECIPES","m":{"role":"Ingredient search and quantity popup over hardcoded sample list","why":"No caller; ingredient list hardcoded and addIngredient only prints","per":"none","net":"none","dep":"-"}},{"id":"IngredientConfirmationView.swift","l":"IngredientConfirmationView","k":"file","y":4,"s":"UNREFERENCED","sub":"RECIPES","m":{"role":"Shows one ingredient string with a confirm button","why":"No caller; confirm action only prints to console","per":"none","net":"none","dep":"-"}},{"id":"IngredientDetailView.swift","l":"IngredientDetailView","k":"file","y":4,"s":"UNREFERENCED","sub":"PRODUCT","m":{"role":"Barcode product detail: OFF nutrition plus Woolworths price matches","why":"Only reachable via IngredientsDetailView, itself unreferenced","per":"none","net":"world.openfoodfacts.org, www.woolworths.co.nz","dep":"OpenFoodFactsService;Networking;StoreProduct"}},{"id":"IngredientsDetailView.swift","l":"IngredientsDetailView","k":"file","y":4,"s":"UNREFERENCED","sub":"RECIPES","m":{"role":"Recipe ingredient checklist toggling items into shopping list","why":"RecipeDetailView renders ingredients inline; nothing instantiates this view","per":"none","net":"world.openfoodfacts.org","dep":"CloudRecipe;ShoppingListManager;OpenFoodFactsService;IngredientDetailView"}},{"id":"InventoryIngredient.swift","l":"InventoryIngredient","k":"file","y":2,"s":"UNREFERENCED","sub":"MODEL","m":{"role":"Inventory ingredient model with CKRecord initialiser","why":"Superseded by StoredIngredient","per":"none","net":"none","dep":"-"}},{"id":"Room.swift","l":"Room","k":"file","y":2,"s":"LIVE","sub":"MODEL","m":{"role":"Room and RoomItem household checklist models","why":"","per":"none","net":"none","dep":"-"}},{"id":"RoomDetailView.swift","l":"RoomDetailView","k":"file","y":4,"s":"UNREFERENCED","sub":"SHOPPING","m":{"role":"Room checklist editor persisting roomsData.json","why":"ShoppingListView loads rooms but never navigates to this view","per":"FileSystem","net":"none","dep":"Room;RoomItem;ShoppingListManager"}},{"id":"RotationConfirmationView.swift","l":"RotationConfirmationView","k":"file","y":4,"s":"LIVE","sub":"MEDIA","m":{"role":"Rotate, pan and zoom an image then crop","why":"","per":"none","net":"none","dep":"-"}},{"id":"SubscriptionManager.swift","l":"SubscriptionManager","k":"file","y":3,"s":"UNREFERENCED","sub":"BILLING","m":{"role":"StoreKit 2 subscription product fetch and purchase singleton","why":"No paywall, no entitlement check or Restore; isSubscribed unpersisted, mutated off main actor","per":"none","net":"App Store / StoreKit","dep":"-"}},{"id":"NetworkMonitor.swift","l":"NetworkMonitor","k":"file","y":3,"s":"LIVE","sub":"INFRA","m":{"role":"NWPathMonitor reachability singleton that triggers offline recipe sync","why":"","per":"none","net":"none","dep":"Networking"}},{"id":"SyncQueueManager.swift","l":"SyncQueueManager","k":"file","y":3,"s":"UNREFERENCED","sub":"INFRA","m":{"role":"Debounced, disk-persisted CloudKit operation queue","why":"Nothing enqueues operations; writes literal \"TODO\" into the name field","per":"FileSystem;CKPublic","net":"CloudKit","dep":"NetworkMonitor"}},{"id":"Notifications.swift","l":"Notifications","k":"file","y":3,"s":"LIVE","sub":"INFRA","m":{"role":"Declares the .recipeDidSave Notification.Name constant","why":"","per":"none","net":"none","dep":"-"}},{"id":"ShoppingItem.swift","l":"ShoppingItem","k":"file","y":2,"s":"UNREFERENCED","sub":"MODEL","m":{"role":"Tiny shopping item struct with id, name, isChecked","why":"ShoppingListItem in ShoppingListManager superseded it","per":"none","net":"none","dep":"-"}},{"id":"ShoppingListManager.swift","l":"ShoppingListManager","k":"file","y":3,"s":"RISK","sub":"SHOPPING","m":{"role":"Owns personal shopping list, local persistence, CloudKit sync","why":"saveToFile() calls itself in its own catch block \u2014 write failure recurses infinitely","per":"AppGroup;UserDefaults;FileSystem;CKPrivate","net":"CloudKit","dep":"FrydgeManager;NetworkMonitor"}},{"id":"ShoppingListView.swift","l":"ShoppingListView","k":"file","y":4,"s":"LIVE","sub":"SHOPPING","m":{"role":"Main shopping tab: personal list, shared lists, store offers","why":"","per":"UserDefaults;FileSystem","net":"retailer + OFF hosts via StockAvailability","dep":"ShoppingListManager;SharedShoppingListManager;FrydgeManager;StockAvailability;CloudSharingView"}},{"id":"ShoppingListActivityAttributes.swift","l":"ShoppingListActivityAttributes","k":"file","y":3,"s":"LIVE","sub":"EXTENSION","m":{"role":"ActivityAttributes and ContentState for shopping Live Activity","why":"","per":"none","net":"none","dep":"-"}},{"id":"ActivityManager.swift","l":"ActivityManager","k":"file","y":3,"s":"RISK","sub":"SHOPPING","m":{"role":"Starts, updates, ends shopping list Live Activity","why":"Reads price cache keys nothing writes; RegionMonitoring starts a rival Live Activity","per":"AppGroup","net":"none","dep":"ShoppingListActivityAttributes"}},{"id":"SharedShoppingListManager.swift","l":"SharedShoppingListManager","k":"file","y":3,"s":"LIVE","sub":"SHARING","m":{"role":"CloudKit shared shopping list anchors, items, push subscriptions","why":"","per":"CKPrivate;CKShared;AppGroup","net":"CloudKit","dep":"SharedShoppingListItem"}},{"id":"SharedShoppingListView.swift","l":"SharedShoppingListView","k":"file","y":4,"s":"UNREFERENCED","sub":"SHARING","m":{"role":"Standalone shared shopping list screen with share and item sheets","why":"No caller; ShoppingListView embeds its own equivalent shared-list section","per":"CKPrivate;CKShared","net":"CloudKit","dep":"SharedShoppingListManager;CloudSharingView;FrydgeManager;StockAvailability"}},{"id":"CloudSharingManager.swift","l":"CloudSharingManager","k":"file","y":3,"s":"UNREFERENCED","sub":"SHARING","m":{"role":"Helper to prepare, normalise and recreate CKShare records","why":"No file instantiates it; views build shares inline instead","per":"CKPrivate;CKShared","net":"CloudKit","dep":"-"}},{"id":"CloudSharingView.swift","l":"CloudSharingView","k":"file","y":4,"s":"LIVE","sub":"SHARING","m":{"role":"UICloudSharingController wrapper with rename, delete, leave","why":"","per":"CKPrivate;CKShared","net":"CloudKit","dep":"-"}},{"id":"CreateSharedFridgeSheet.swift","l":"CreateSharedFridgeSheet","k":"file","y":4,"s":"LIVE","sub":"SHARING","m":{"role":"Sheet to name and create a new shared fridge","why":"","per":"none","net":"none","dep":"-"}},{"id":"SharedFrydgeManager.swift","l":"SharedFrydgeManager","k":"file","y":3,"s":"LIVE","sub":"SHARING","m":{"role":"CloudKit shared fridge anchors, items, zones, subscriptions","why":"","per":"CKPrivate;CKShared","net":"CloudKit","dep":"PendingInvites"}},{"id":"SharedFrydgeView.swift","l":"SharedFrydgeView","k":"file","y":4,"s":"LIVE","sub":"SHARING","m":{"role":"Shared fridge list UI, invites, item editing, sharing sheets","why":"","per":"CKPrivate;CKShared","net":"CloudKit","dep":"SharedFridgeManager;PendingInvites;CloudSharingView;CreateSharedFridgeSheet;DietaryBadgeChip"}},{"id":"PendingInvites.swift","l":"PendingInvites","k":"file","y":3,"s":"LIVE","sub":"SHARING","m":{"role":"Pending CKShare invite store plus invitations UI","why":"","per":"InMemory","net":"CloudKit","dep":"-"}},{"id":"CloudPan.swift","l":"CloudPan","k":"file","y":2,"s":"DUPLICATE","sub":"MODEL","m":{"role":"Pan model built from CKRecord with CKReference helper","why":"One of three competing pan models","per":"none","net":"none","dep":"-"}},{"id":"CloudRecipe.swift","l":"CloudRecipe","k":"file","y":2,"s":"LIVE","sub":"MODEL","m":{"role":"Recipe model, CloudKit record mapping, offline save and sync","why":"","per":"CKPublic;UserDefaults","net":"CloudKit","dep":"RecipeStep;NetworkMonitor;RecipeEditorView"}},{"id":"RecipeCreationFlowView.swift","l":"RecipeCreationFlowView","k":"file","y":4,"s":"UNREFERENCED","sub":"RECIPES","m":{"role":"Multi-step photo/name/ingredients/steps wizard building a local draft","why":"No call site; contains live \"wire later\" placeholder buttons","per":"InMemory","net":"none","dep":"RecipeDraft;RecipeStep"}},{"id":"RecipeDetailView.swift","l":"RecipeDetailView","k":"file","y":4,"s":"LIVE","sub":"RECIPES","m":{"role":"Recipe detail with serves scaling, shopping toggles, share sheet","why":"","per":"UserDefaults;FileSystem","net":"none","dep":"CloudRecipe;RecipeEditorView;ShoppingListManager;FrydgeManager;RecipeExportWriter"}},{"id":"RecipeDraft.swift","l":"RecipeDraft","k":"file","y":2,"s":"UNREFERENCED","sub":"MODEL","m":{"role":"Struct holding unsaved recipe name, image, ingredients, steps","why":"Only consumed by the unreferenced RecipeCreationFlowView","per":"InMemory","net":"none","dep":"RecipeStep"}},{"id":"RecipeEditorView.swift","l":"RecipeEditorView","k":"file","y":4,"s":"RISK","sub":"RECIPES","m":{"role":"Create/edit recipe, writes Recipe record to CloudKit","why":"Saves user recipes to the PUBLIC CloudKit database \u2014 every user can read and overwrite them","per":"CKPublic;FileSystem","net":"CloudKit, imported-recipe image hosts","dep":"CloudRecipe;RecipeStep;RecipeImportManager;ProductDetailsView;Networking"}},{"id":"RecipeImportManager.swift","l":"RecipeImportManager","k":"file","y":3,"s":"LIVE","sub":"RECIPES","m":{"role":"Fetches recipe web pages, parses JSON-LD/OG into draft","why":"","per":"AppGroup;FileSystem","net":"any user-supplied recipe website","dep":"-"}},{"id":"RecipeImportOCRParser.swift","l":"RecipeImportOCRParser","k":"file","y":3,"s":"LIVE","sub":"RECIPES","m":{"role":"Turns scanned OCR text into a recipe import draft","why":"","per":"none","net":"none","dep":"RecipeImportManager"}},{"id":"RecipeImportView.swift","l":"RecipeImportView","k":"file","y":4,"s":"LIVE","sub":"RECIPES","m":{"role":"Import UI: share-inbox list, URL fetch, page scan","why":"","per":"AppGroup;FileSystem","net":"any user-supplied recipe website","dep":"RecipeImportManager;RecipeEditorView;RecipePageScanView;RecipeImportOCRParser;CloudRecipe"}},{"id":"RecipeIngredient.swift","l":"RecipeIngredient","k":"file","y":2,"s":"UNREFERENCED","sub":"MODEL","m":{"role":"Ingredient model mapping to CloudKit RecipeIngredient records","why":"Recipes persist ingredients as plain strings instead","per":"CKPublic","net":"CloudKit","dep":"-"}},{"id":"RecipeListModel.swift","l":"RecipeListModel","k":"file","y":3,"s":"RISK","sub":"RECIPES","m":{"role":"Observable recipe store: fetch, upsert, UserDefaults cache","why":"Unscoped public-DB query returns and overwrites every user's recipes","per":"CKPublic;UserDefaults","net":"CloudKit","dep":"CloudRecipe;Networking"}},{"id":"RecipeListView.swift","l":"RecipeListView","k":"file","y":4,"s":"LIVE","sub":"RECIPES","m":{"role":"Recipes tab: card list, filters, favourites, navigation","why":"","per":"UserDefaults;FileSystem","net":"CloudKit, remote image hosts","dep":"RecipeListModel;CloudRecipe;RecipeDetailView;RecipeEditorView;RecipeImportView"}},{"id":"RecipeModel.swift","l":"RecipeModel","k":"file","y":2,"s":"UNREFERENCED","sub":"MODEL","m":{"role":"One-line wrapper struct holding an array of recipes","why":"No file constructs or references RecipeModel","per":"none","net":"none","dep":"CloudRecipe"}},{"id":"RecipePageScanView.swift","l":"RecipePageScanView","k":"file","y":4,"s":"LIVE","sub":"MEDIA","m":{"role":"VisionKit document camera plus Vision OCR text recognition","why":"","per":"none","net":"none","dep":"-"}},{"id":"RecipePan.swift","l":"RecipePan","k":"file","y":2,"s":"DUPLICATE","sub":"MODEL","m":{"role":"Pan model fetched by reference from public CloudKit","why":"Third pan model beside CloudPan and Pan; no references","per":"CKPublic","net":"CloudKit","dep":"-"}},{"id":"RecipeShareExport.swift","l":"RecipeShareExport","k":"file","y":3,"s":"RISK","sub":"RECIPES","m":{"role":"JSON share payload and temp-file writer","why":"KVC value(forKey:) on a Swift struct can crash sharing; serves forced to 1","per":"FileSystem","net":"none","dep":"CloudRecipe;RecipeStep"}},{"id":"RecipeStep.swift","l":"RecipeStep","k":"file","y":2,"s":"LIVE","sub":"MODEL","m":{"role":"Step model: text, timer, temperature, optional media URL","why":"","per":"none","net":"none","dep":"-"}},{"id":"SaveRecipeView.swift","l":"SaveRecipeView","k":"file","y":4,"s":"STUB","sub":"RECIPES","m":{"role":"Wizard confirmation screen for name and ingredients","why":"Save button only prints; sole caller is itself unreachable","per":"none","net":"none","dep":"-"}},{"id":"FullCookProcessView.swift","l":"FullCookProcessView","k":"file","y":4,"s":"UNREFERENCED","sub":"RECIPES","m":{"role":"Side-by-side ingredients and legacy instructions cook screen","why":"No call site; renders legacy instructions string, ignores steps","per":"none","net":"none","dep":"CloudRecipe"}},{"id":"InstructionsDetailView.swift","l":"InstructionsDetailView","k":"file","y":4,"s":"UNREFERENCED","sub":"RECIPES","m":{"role":"Displays recipe.instructions text with a title","why":"No call site; legacy field superseded by RecipeStep","per":"none","net":"none","dep":"CloudRecipe"}},{"id":"GotYourPanView.swift","l":"GotYourPanView","k":"file","y":4,"s":"UNREFERENCED","sub":"RECIPES","m":{"role":"Pan checklist comparing owned pans against recipe pans","why":"No call site; loadPans returns hardcoded sample data","per":"none","net":"none","dep":"-"}},{"id":"PanSelectionView.swift","l":"PanSelectionView","k":"file","y":4,"s":"UNREFERENCED","sub":"RECIPES","m":{"role":"Searchable pan picker loading Pan records from CloudKit","why":"No call site; queries the wrong CloudKit container","per":"CKPublic","net":"CloudKit (default container)","dep":"CloudPan"}},{"id":"Pan.swift","l":"Pan","k":"file","y":2,"s":"DUPLICATE","sub":"MODEL","m":{"role":"Pan model with CKRecord mapping and SF Symbol names","why":"Duplicates CloudPan and RecipePan; nothing references it","per":"none","net":"none","dep":"-"}},{"id":"DietaryBadgeChip.swift","l":"DietaryBadgeChip","k":"file","y":4,"s":"LIVE","sub":"OTHER","m":{"role":"Small reusable DF/GF/V badge chip view","why":"","per":"none","net":"none","dep":"-"}},{"id":"CameraCaptureView.swift","l":"CameraCaptureView","k":"file","y":4,"s":"UNREFERENCED","sub":"MEDIA","m":{"role":"UIKit camera picker wrapper returning a captured UIImage","why":"Only used by the unreferenced food-recognition wizard","per":"none","net":"none","dep":"-"}},{"id":"ImageHelper.swift","l":"ImageHelper","k":"file","y":3,"s":"UNREFERENCED","sub":"MEDIA","m":{"role":"Static resize, temp-file store and high-res image load helpers","why":"No call sites; other views use their own resize code","per":"FileSystem","net":"none","dep":"-"}},{"id":"ImagePicker.swift","l":"ImagePicker","k":"file","y":4,"s":"UNREFERENCED","sub":"MEDIA","m":{"role":"Photo-library picker that crops and resizes to 200px square","why":"Views define their own pickers","per":"none","net":"none","dep":"-"}},{"id":"MultiImagePicker.swift","l":"MultiImagePicker","k":"file","y":4,"s":"UNREFERENCED","sub":"MEDIA","m":{"role":"Photo-library picker collecting images plus high-res asset URLs","why":"No call sites; superseded by per-view picker wrappers","per":"none","net":"none","dep":"-"}},{"id":"BarcodeScannerView.swift","l":"BarcodeScannerView","k":"file","y":4,"s":"LIVE","sub":"PRODUCT","m":{"role":"VisionKit scanner for barcodes, nutrition tables, front labels","why":"","per":"none","net":"grocery-price-server\u2026workers.dev, world.openfoodfacts.org","dep":"OpenFoodFactsService;OFFLocalDB;ProductProtocol"}},{"id":"WizardStepView.swift","l":"WizardStepView","k":"file","y":5,"s":"UNREFERENCED","sub":"NAV","m":{"role":"Generic step wrapper with title, back/next and step indicator","why":"Only consumer is the unreferenced wizard","per":"none","net":"none","dep":"-"}},{"id":"foodRecognitionWizardView.swift","l":"foodRecognitionWizardView","k":"file","y":4,"s":"RISK","sub":"RECIPES","m":{"role":"Four-step photo-to-recipe wizard saving result to CloudKit","why":"Sends user food photos to Foodvisor with no consent screen; also unreferenced","per":"CKPublic","net":"vision.foodvisor.io","dep":"Networking;WizardStepView;CameraCaptureView;FoodNameConfirmationView;CloudRecipe"}},{"id":"FoodAnalysisResponse.swift","l":"FoodAnalysisResponse","k":"file","y":2,"s":"UNREFERENCED","sub":"MODEL","m":{"role":"Codable models for food and nutrition analysis payloads","why":"Networking declares its own response type instead","per":"none","net":"none","dep":"-"}},{"id":"FoodNameConfirmationView.swift","l":"FoodNameConfirmationView","k":"file","y":4,"s":"UNREFERENCED","sub":"RECIPES","m":{"role":"Text field letting user confirm or edit detected food name","why":"Only used by the unreferenced wizard","per":"none","net":"none","dep":"-"}},{"id":"FoodInfoService.swift","l":"FoodInfoService","k":"file","y":3,"s":"UNREFERENCED","sub":"PRODUCT","m":{"role":"Completion-handler wrapper around Open Food Facts name search","why":"Only caller is the unreferenced FoodInfoView","per":"none","net":"world.openfoodfacts.org","dep":"OpenFoodFactsService"}},{"id":"FoodInfoView.swift","l":"FoodInfoView","k":"file","y":4,"s":"UNREFERENCED","sub":"PRODUCT","m":{"role":"Displays product name, image and basic nutriments","why":"No call sites found anywhere in the project","per":"none","net":"world.openfoodfacts.org","dep":"FoodInfoService"}},{"id":"NutritionScoreResult.swift","l":"NutritionScoreResult","k":"file","y":2,"s":"LIVE","sub":"MODEL","m":{"role":"Mirror-based nutrition scoring engine producing a 1-10 score","why":"","per":"none","net":"none","dep":"-"}},{"id":"OFFProductLite.swift","l":"OFFProductLite","k":"file","y":2,"s":"LIVE","sub":"MODEL","m":{"role":"Read-only SQLite local Open Food Facts barcode lookup","why":"","per":"FileSystem","net":"none","dep":"-"}},{"id":"OpenFoodFactsService.swift","l":"OpenFoodFactsService","k":"file","y":3,"s":"LIVE","sub":"PRODUCT","m":{"role":"OFF barcode fetch and search, product and nutriment models","why":"","per":"none","net":"world.openfoodfacts.org","dep":"-"}},{"id":"ProductDetailsView.swift","l":"ProductDetailsView","k":"file","y":4,"s":"LIVE","sub":"PRODUCT","m":{"role":"Main add/edit item sheet with availability, prices, CloudKit save","why":"","per":"CKShared;FileSystem","net":"grocery-price-server\u2026workers.dev, retailer hosts","dep":"BarcodeScannerView;FrydgeManager;ShoppingListManager;StockAvailability"}},{"id":"ProductImageCacheManager.swift","l":"ProductImageCacheManager","k":"file","y":3,"s":"LIVE","sub":"MEDIA","m":{"role":"Downloads and caches product thumbnails on disk","why":"","per":"FileSystem","net":"arbitrary product-image hosts","dep":"-"}},{"id":"ProductProtocol.swift","l":"ProductProtocol","k":"file","y":2,"s":"DUPLICATE","sub":"MODEL","m":{"role":"Declares CustomProductProtocol and CustomManualProduct","why":"Near-identical to the protocol in OpenFoodFactsService; unreferenced","per":"none","net":"none","dep":"-"}},{"id":"ProductViewModel.swift","l":"ProductViewModel","k":"file","y":3,"s":"LIVE","sub":"PRODUCT","m":{"role":"Observable barcode and manual product entry state","why":"","per":"none","net":"world.openfoodfacts.org","dep":"OpenFoodFactsService;ProductProtocol"}},{"id":"ManualProductInputView.swift","l":"ManualProductInputView","k":"file","y":4,"s":"UNREFERENCED","sub":"PRODUCT","m":{"role":"Form for typing product name, quantity and ingredients","why":"No view presents it","per":"none","net":"none","dep":"ProductViewModel;ProductProtocol"}},{"id":"Networking.swift","l":"Networking","k":"file","y":3,"s":"RISK","sub":"INFRA","m":{"role":"CloudKit recipe CRUD, Woolworths HTML scrape, Foodvisor image analysis","why":"Hardcoded Foodvisor API key in source; uploads user photos; force-unwrapped URL","per":"CKPublic;UserDefaults;FileSystem","net":"vision.foodvisor.io, www.woolworths.co.nz","dep":"CloudRecipe;RecipeStep"}},{"id":"GeoLocationManager.swift","l":"GeoLocationManager","k":"file","y":3,"s":"LIVE","sub":"LOCATION","m":{"role":"Lightweight CoreLocation wrapper publishing user coordinate","why":"","per":"none","net":"none","dep":"-"}},{"id":"GlobeView.swift","l":"GlobeView","k":"file","y":4,"s":"UNREFERENCED","sub":"OTHER","m":{"role":"Trivial SF Symbol globe image view","why":"Three-line decorative wrapper nothing instantiates","per":"none","net":"none","dep":"-"}},{"id":"GoLocalView.swift","l":"GoLocalView","k":"file","y":4,"s":"RISK","sub":"LOCATION","m":{"role":"GoLocal map/list of stores, deals, barcode add","why":"Renders joke stores (Clark Cakes, Tanks R US) to users; tab cannot navigate","per":"none","net":"retailer hosts via StockAvailability","dep":"LocationManager;Store;StoreView;StockAvailability;ShoppingListManager"}},{"id":"LocationManager.swift","l":"LocationManager","k":"file","y":3,"s":"RISK","sub":"LOCATION","m":{"role":"CoreLocation manager plus hardcoded predefined store list","why":"Hardcoded joke stores with YouTube \"websites\" shown in GoLocal","per":"none","net":"none","dep":"Store"}},{"id":"LocationNotificationManager.swift","l":"LocationNotificationManager","k":"file","y":3,"s":"RISK","sub":"LOCATION","m":{"role":"Geofence entry notification manager for store regions","why":"Requests Always authorisation in init; hardcoded San Francisco test geofence","per":"AppGroup;UserDefaults","net":"none","dep":"-"}},{"id":"NearbyStoresView.swift","l":"NearbyStoresView","k":"file","y":4,"s":"UNREFERENCED","sub":"LOCATION","m":{"role":"List sheet showing nearby stores with website links","why":"No caller; superseded by GoLocalView list mode","per":"none","net":"none","dep":"Store"}},{"id":"RegionMonitoring.swift","l":"RegionMonitoring","k":"file","y":3,"s":"RISK","sub":"LOCATION","m":{"role":"Selects nearest stores, monitors regions, starts Live Activity","why":"Duplicated joke store entries; third competing geofence owner","per":"AppGroup;UserDefaults","net":"none","dep":"Store"}},{"id":"StockAvailability.swift","l":"StockAvailability","k":"file","y":3,"s":"RISK","sub":"PRICING","m":{"role":"Price and stock lookup: NZ worker plus UK scraping","why":"On-device retailer HTML scraping, spoofed Safari User-Agent, hidden WKWebView, force-unwrapped URLs","per":"FileSystem;InMemory","net":"grocery-price-server\u2026workers.dev, tesco, sainsburys, waitrose, M&S, woolworths.co.nz, paknsave, newworld, a.fsimg.co.nz, lite.duckduckgo.com","dep":"-"}},{"id":"StockAvailabilityNZ.swift","l":"StockAvailabilityNZ","k":"file","y":3,"s":"RISK","sub":"PRICING","m":{"role":"NZ strategy calling the Cloudflare grocery price worker","why":"Unreferenced duplicate of StockAvailability's inline NZ path","per":"none","net":"grocery-price-server\u2026workers.dev, woolworths.co.nz, paknsave, newworld","dep":"StockAvailability"}},{"id":"StockAvailabilityUK.swift","l":"StockAvailabilityUK","k":"file","y":3,"s":"RISK","sub":"PRICING","m":{"role":"UK strategy scraping four supermarket search pages","why":"Unreferenced duplicate; scrapes retailer HTML with a JS-render fallback","per":"none","net":"tesco, sainsburys, waitrose, marksandspencer","dep":"StockAvailability"}},{"id":"StoreDetailView.swift","l":"StoreDetailView","k":"file","y":4,"s":"UNREFERENCED","sub":"LOCATION","m":{"role":"Store detail card with call, website and maps actions","why":"No caller; StoreView is used by GoLocalView instead","per":"none","net":"none","dep":"Store;LocationManager"}},{"id":"StoreView.swift","l":"StoreView","k":"file","y":4,"s":"LIVE","sub":"LOCATION","m":{"role":"Store card with directions, phone and website links","why":"","per":"none","net":"maps.apple.com","dep":"Store"}},{"id":"UserLocationAnnotation.swift","l":"UserLocationAnnotation","k":"file","y":3,"s":"LIVE","sub":"LOCATION","m":{"role":"Blue map annotation marking the user's current position","why":"","per":"none","net":"none","dep":"-"}},{"id":"KeyboardToolbarHelper.swift","l":"KeyboardToolbarHelper","k":"file","y":3,"s":"UNREFERENCED","sub":"INFRA","m":{"role":"Adds a global keyboard Done toolbar","why":"No view embeds it; mutates text-field appearance globally","per":"none","net":"none","dep":"-"}},{"id":"package.json","l":"package.json","k":"file","y":3,"s":"UNREFERENCED","sub":"BILLING","m":{"role":"Node manifest for a Stripe marketplace payments backend","why":"No iOS target consumes it; the backend JS is not even in the project","per":"none","net":"localhost:3000","dep":"-"}},{"id":"FIX_INFO_PLIST_DUPLICATES.md","l":"FIX_INFO_PLIST_DUPLICATES.md","k":"file","y":3,"s":"UNREFERENCED","sub":"INFRA","m":{"role":"Xcode guide for fixing duplicate Info.plist build errors","why":"Documentation note, not compiled","per":"none","net":"none","dep":"-"}},{"id":"Recipes-Bridging-Header.h","l":"Recipes-Bridging-Header.h","k":"file","y":3,"s":"STUB","sub":"INFRA","m":{"role":"Objective-C to Swift bridging header","why":"Contains only comments; no headers imported","per":"none","net":"none","dep":"-"}},{"id":"store:FileSystem","l":"JSON files on disk","k":"store","y":1,"s":"","sub":"STORE","m":{}},{"id":"store:UserDefaults","l":"UserDefaults","k":"store","y":1,"s":"","sub":"STORE","m":{}},{"id":"store:AppGroup","l":"App Group suite","k":"store","y":1,"s":"","sub":"STORE","m":{}},{"id":"store:CKPrivate","l":"CloudKit private","k":"store","y":1,"s":"","sub":"STORE","m":{}},{"id":"store:CKShared","l":"CloudKit shared","k":"store","y":1,"s":"","sub":"STORE","m":{}},{"id":"store:CKPublic","l":"CloudKit PUBLIC","k":"store","y":1,"s":"BAD","sub":"STORE","m":{}},{"id":"store:CoreData","l":"Core Data (unwired)","k":"store","y":1,"s":"","sub":"STORE","m":{}},{"id":"host:off","l":"openfoodfacts.org","k":"host","y":0,"s":"","sub":"HOST","m":{}},{"id":"host:worker","l":"price worker (CF)","k":"host","y":0,"s":"","sub":"HOST","m":{}},{"id":"host:ck","l":"Apple CloudKit","k":"host","y":0,"s":"","sub":"HOST","m":{}},{"id":"host:apns","l":"APNs","k":"host","y":0,"s":"","sub":"HOST","m":{}},{"id":"host:storekit","l":"App Store / StoreKit","k":"host","y":0,"s":"","sub":"HOST","m":{}},{"id":"host:wools","l":"woolworths.co.nz","k":"host","y":0,"s":"BAD","sub":"HOST","m":{}},{"id":"host:nzsuper","l":"Pak\u2019nSave / New World","k":"host","y":0,"s":"BAD","sub":"HOST","m":{}},{"id":"host:uksuper","l":"UK supermarkets \u00d74","k":"host","y":0,"s":"BAD","sub":"HOST","m":{}},{"id":"host:ddg","l":"lite.duckduckgo.com","k":"host","y":0,"s":"BAD","sub":"HOST","m":{}},{"id":"host:fv","l":"vision.foodvisor.io","k":"host","y":0,"s":"BAD","sub":"HOST","m":{}},{"id":"host:recipes","l":"any recipe website","k":"host","y":0,"s":"","sub":"HOST","m":{}},{"id":"host:maps","l":"maps.apple.com","k":"host","y":0,"s":"","sub":"HOST","m":{}},{"id":"host:local","l":"localhost:3000","k":"host","y":0,"s":"","sub":"HOST","m":{}}],"edges":[[0,3,0],[0,12,0],[0,27,0],[0,36,0],[0,38,0],[0,103,1],[0,104,1],[0,109,1],[1,4,0],[1,2,0],[2,23,0],[2,82,0],[2,31,0],[2,36,0],[2,89,0],[2,102,1],[2,101,1],[2,109,1],[2,110,1],[3,5,0],[4,5,0],[4,3,0],[4,38,0],[4,101,1],[4,105,2],[4,109,1],[5,3,0],[5,50,0],[5,28,0],[5,13,0],[5,85,0],[6,50,0],[6,28,0],[6,13,0],[6,67,0],[8,104,1],[8,105,2],[8,109,1],[9,106,1],[12,23,0],[12,100,1],[12,101,1],[12,103,1],[12,109,1],[13,12,0],[13,36,0],[13,77,0],[13,90,0],[13,78,0],[13,100,1],[13,103,1],[13,104,1],[13,107,1],[13,109,1],[16,76,0],[16,82,0],[16,107,1],[16,112,2],[17,40,0],[17,27,0],[17,76,0],[17,16,0],[17,107,1],[20,19,0],[20,27,0],[20,100,1],[22,111,1],[23,82,0],[24,23,0],[24,100,1],[24,105,2],[24,109,1],[27,12,0],[27,23,0],[27,102,1],[27,101,1],[27,100,1],[27,103,1],[27,109,1],[28,27,0],[28,31,0],[28,12,0],[28,90,0],[28,34,0],[28,101,1],[28,100,1],[28,114,2],[30,29,0],[30,102,1],[31,10,0],[31,103,1],[31,104,1],[31,102,1],[31,109,1],[32,31,0],[32,34,0],[32,12,0],[32,90,0],[32,103,1],[32,104,1],[32,109,1],[33,103,1],[33,104,1],[33,109,1],[34,103,1],[34,104,1],[34,109,1],[36,38,0],[36,103,1],[36,104,1],[36,109,1],[37,36,0],[37,38,0],[37,34,0],[37,35,0],[37,62,0],[37,103,1],[37,104,1],[37,109,1],[38,109,1],[40,55,0],[40,23,0],[40,44,0],[40,105,2],[40,101,1],[40,109,1],[41,43,0],[41,55,0],[42,40,0],[42,44,0],[42,27,0],[42,12,0],[42,54,0],[42,101,1],[42,100,1],[43,55,0],[44,40,0],[44,55,0],[44,45,0],[44,77,0],[44,82,0],[44,105,2],[44,100,1],[44,109,1],[44,117,1],[45,102,1],[45,100,1],[45,117,1],[46,45,0],[47,45,0],[47,44,0],[47,52,0],[47,46,0],[47,40,0],[47,102,1],[47,100,1],[47,117,1],[48,105,2],[48,109,1],[49,40,0],[49,82,0],[49,105,2],[49,101,1],[49,109,1],[50,49,0],[50,40,0],[50,42,0],[50,44,0],[50,47,0],[50,101,1],[50,100,1],[50,109,1],[50,117,1],[51,40,0],[53,105,2],[53,109,1],[54,40,0],[54,55,0],[54,100,1],[57,40,0],[58,40,0],[60,39,0],[60,105,2],[60,109,1],[64,100,1],[67,76,0],[67,75,0],[67,79,0],[67,107,1],[67,108,1],[69,82,0],[69,68,0],[69,63,0],[69,71,0],[69,40,0],[69,105,2],[69,116,2],[72,76,0],[72,107,1],[73,72,0],[73,107,1],[75,100,1],[76,107,1],[77,67,0],[77,12,0],[77,27,0],[77,90,0],[77,104,1],[77,100,1],[77,108,1],[77,114,2],[78,100,1],[78,117,1],[80,76,0],[80,79,0],[80,107,1],[81,80,0],[81,79,0],[82,40,0],[82,55,0],[82,105,2],[82,101,1],[82,100,1],[82,112,2],[82,116,2],[85,86,0],[85,10,0],[85,94,0],[85,90,0],[85,27,0],[85,114,2],[86,10,0],[87,102,1],[87,101,1],[88,10,0],[89,10,0],[89,102,1],[89,101,1],[90,100,1],[90,108,1],[90,112,2],[90,113,2],[90,114,2],[90,115,2],[91,90,0],[91,108,1],[91,112,2],[91,113,2],[92,90,0],[92,114,2],[93,10,0],[93,86,0],[94,10,0],[94,118,1],[97,119,1]]};
+
+// ---------------------------------------------------------------- layout
+const FLOORS = [
+  {y:0, label:'External hosts'},
+  {y:1, label:'Data stores'},
+  {y:2, label:'Models'},
+  {y:3, label:'Managers & services'},
+  {y:4, label:'Views'},
+  {y:5, label:'App shell'},
+];
+const GROUP_ANGLE = {};
+(function(){
+  const gs = ['ENTRY','NAV','FRIDGE','SHOPPING','RECIPES','PRODUCT','SHARING','LOCATION',
+              'PRICING','MEDIA','BILLING','INFRA','MODEL','EXTENSION','OTHER','STORE','HOST'];
+  gs.forEach((g,i)=>GROUP_ANGLE[g] = (i/gs.length)*Math.PI*2);
+})();
+
+const N = DATA.nodes, E = DATA.edges;
+
+// place nodes: angle from subsystem (so the same subsystem stacks vertically),
+// radius spread so labels don't collide.
+(function place(){
+  const RADIUS = {0:395, 1:270, 2:250, 3:330, 4:355, 5:190};
+  const perFloor = {};
+  N.forEach(n=>{ (perFloor[n.y] = perFloor[n.y] || []).push(n); });
+  Object.keys(perFloor).forEach(k=>{
+    const list = perFloor[k];
+    list.sort((a,b)=> (a.sub===b.sub ? a.l.localeCompare(b.l)
+                                     : (GROUP_ANGLE[a.sub]||0)-(GROUP_ANGLE[b.sub]||0)));
+    const count = list.length;
+    const R = RADIUS[k] || 280;
+    list.forEach((n,i)=>{
+      // even sweep of the whole circle, subsystems stay adjacent because of the sort
+      const a = (i / count) * Math.PI * 2;
+      // alternate three radii so neighbouring labels are not on the same arc
+      const ring = [1, 0.72, 1.24][i % 3];
+      n.px = Math.cos(a) * R * ring;
+      n.pz = Math.sin(a) * R * ring;
+    });
+  });
+})();
+
+const isDead = n => n.k==='file' && (n.s==='UNREFERENCED'||n.s==='DUPLICATE'||n.s==='STUB');
+const colourOf = n => {
+  if(n.k==='store') return n.s==='BAD' ? V('--risk') : V('--store');
+  if(n.k==='host')  return n.s==='BAD' ? V('--risk') : V('--host');
+  if(n.s==='RISK')  return V('--risk');
+  if(isDead(n))     return V('--dead');
+  return V('--live');
+};
+function V(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+// ---------------------------------------------------------------- camera
+const cam = {yaw:-0.62, pitch:0.30, dist:1150, spread:118};
+const HOME = Object.assign({}, cam);
+let spin = true, filter = 'ALL', hover = -1, selected = -1;
+
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+let W=0, H=0, DPR=1;
+function resize(){
+  DPR = Math.min(window.devicePixelRatio||1, 2);
+  W = cv.clientWidth; H = cv.clientHeight;
+  cv.width = W*DPR; cv.height = H*DPR;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+window.addEventListener('resize', resize);
+
+const P = [];  // projected {x,y,z,scale,vis}
+function project(){
+  const cy = Math.cos(cam.yaw),  sy = Math.sin(cam.yaw);
+  const cp = Math.cos(cam.pitch), sp = Math.sin(cam.pitch);
+  const cx = W/2, cyy = H/2 + 30;
+  const fov = 760;
+  const midFloor = 2.4;
+  for(let i=0;i<N.length;i++){
+    const n = N[i];
+    const x0 = n.px, y0 = (n.y - midFloor) * cam.spread, z0 = n.pz;
+    // yaw about Y
+    let x = x0*cy - z0*sy, z = x0*sy + z0*cy, y = y0;
+    // pitch about X
+    const y1 = y*cp - z*sp, z1 = y*sp + z*cp;
+    const d = z1 + cam.dist;
+    const k = fov / Math.max(d, 60);
+    let p = P[i] || (P[i] = {});
+    p.x = cx + x*k; p.y = cyy - y1*k; p.z = d; p.k = k;
+  }
+}
+
+function dim(n){
+  if(filter==='ALL') return 1;
+  if(filter==='LIVE') return (n.k==='file' && n.s==='LIVE') ? 1 : 0.07;
+  if(filter==='RISK') return (n.s==='RISK'||n.s==='BAD') ? 1 : 0.07;
+  if(filter==='DEAD') return isDead(n) ? 1 : 0.07;
+  return 1;
+}
+
+function neighbours(i){
+  const set = new Set();
+  for(const e of E){ if(e[0]===i) set.add(e[1]); else if(e[1]===i) set.add(e[0]); }
+  return set;
+}
+let hiSet = null;
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  project();
+
+  const focus = selected >= 0 ? selected : hover;
+  hiSet = focus >= 0 ? neighbours(focus) : null;
+
+  // ---- floor rings
+  ctx.save();
+  const ringCol = V('--line');
+  for(const f of FLOORS){
+    ctx.beginPath();
+    for(let a=0;a<=72;a++){
+      const t = a/72*Math.PI*2, R = 455;
+      const x0=Math.cos(t)*R, z0=Math.sin(t)*R, y0=(f.y-2.5)*cam.spread;
+      const cyc=Math.cos(cam.yaw), syc=Math.sin(cam.yaw);
+      let x=x0*cyc - z0*syc, z=x0*syc + z0*cyc;
+      const cp=Math.cos(cam.pitch), sp=Math.sin(cam.pitch);
+      const y1=y0*cp - z*sp, z1=y0*sp + z*cp;
+      const k = 760/Math.max(z1+cam.dist,60);
+      const px = W/2 + x*k, py = H/2 + 30 - y1*k;
+      a ? ctx.lineTo(px,py) : ctx.moveTo(px,py);
+    }
+    ctx.strokeStyle = ringCol; ctx.globalAlpha = .55; ctx.lineWidth = 1; ctx.stroke();
+  }
+  ctx.globalAlpha = 1; ctx.restore();
+
+  // ---- edges (painter order by mean depth)
+  const order = E.map((e,i)=>i).sort((a,b)=>{
+    const ea=E[a], eb=E[b];
+    return ((P[eb[0]].z+P[eb[1]].z) - (P[ea[0]].z+P[ea[1]].z));
+  });
+  for(const ei of order){
+    const [a,b,kind] = E[ei];
+    const na=N[a], nb=N[b], pa=P[a], pb=P[b];
+    const inFocus = focus>=0 && (a===focus||b===focus);
+    let alpha = Math.min(dim(na),dim(nb)) * (kind===2 ? .55 : kind===1 ? .20 : .13);
+    if(focus>=0) alpha = inFocus ? .95 : alpha*0.18;
+    if(alpha < 0.02) continue;
+    ctx.beginPath();
+    ctx.moveTo(pa.x,pa.y);
+    const mx=(pa.x+pb.x)/2, my=(pa.y+pb.y)/2 - Math.abs(pa.y-pb.y)*0.10 - 8;
+    ctx.quadraticCurveTo(mx,my,pb.x,pb.y);
+    ctx.strokeStyle = kind===2 ? V('--risk') : (inFocus ? V('--live') : V('--ink-3'));
+    ctx.globalAlpha = alpha;
+    ctx.lineWidth = inFocus ? 1.9 : (kind===2 ? 1.5 : 1);
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+
+  // ---- nodes, back to front
+  const ord = N.map((n,i)=>i).sort((a,b)=>P[b].z - P[a].z);
+  for(const i of ord){
+    const n=N[i], p=P[i];
+    let a = dim(n);
+    if(focus>=0) a *= (i===focus || (hiSet && hiSet.has(i))) ? 1 : 0.22;
+    if(a < 0.03) continue;
+    const base = n.k==='file' ? 4.6 : 8.0;
+    const rr = Math.max(1.8, base * p.k * 0.92);
+    const col = colourOf(n);
+    ctx.globalAlpha = a;
+    if(i===focus){
+      ctx.beginPath(); ctx.arc(p.x,p.y,rr+8,0,6.2832);
+      ctx.fillStyle=col; ctx.globalAlpha=a*0.20; ctx.fill(); ctx.globalAlpha=a;
+    }
+    ctx.beginPath();
+    if(n.k==='file'){ ctx.arc(p.x,p.y,rr,0,6.2832); }
+    else { ctx.rect(p.x-rr, p.y-rr, rr*2, rr*2); }
+    ctx.fillStyle = col; ctx.fill();
+    ctx.lineWidth = 1.2; ctx.strokeStyle = V('--bg'); ctx.stroke();
+  }
+
+  // ---- labels, front to back, skipping any that would collide
+  ctx.textAlign='left'; ctx.textBaseline='middle';
+  const placed = [];
+  const fits = (x,y,w,h)=>{
+    for(const b of placed){
+      if(x < b[2] && x+w > b[0] && y < b[3] && y+h > b[1]) return false;
+    }
+    return true;
+  };
+  // stores and hosts claim their space first — they anchor the whole picture
+  const near = ord.slice().reverse();
+  const pass = near.filter(i=>N[i].s==='BAD')
+    .concat(near.filter(i=>N[i].s!=='BAD' && N[i].k!=='file'))
+    .concat(near.filter(i=>N[i].k==='file'));
+  for(const i of pass){
+    const n=N[i], p=P[i];
+    let a = dim(n);
+    if(focus>=0) a *= (i===focus || (hiSet && hiSet.has(i))) ? 1 : 0.22;
+    if(a < 0.32) continue;
+    const forced = i===focus || (hiSet && hiSet.has(i));
+    const wide  = n.k!=='file';
+    if(!forced && !wide && p.k < 0.80) continue;
+
+    const rr = Math.max(1.8, (n.k==='file'?4.6:8.0) * p.k * 0.92);
+    const fs = Math.max(9.5, Math.min(13.5, 11.5*p.k));
+    ctx.font = (n.k==='file' ? '' : '650 ') + fs + 'px -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif';
+    const w = ctx.measureText(n.l).width, h = fs + 3;
+    const x = p.x + rr + 5, y = p.y - h/2;
+    if(!forced && !fits(x,y,w,h)) continue;
+    placed.push([x-2, y-1, x+w+2, y+h+1]);
+
+    ctx.globalAlpha = a * (i===focus ? 1 : .86);
+    // a soft plate keeps text readable where it crosses an edge
+    ctx.fillStyle = V('--bg'); ctx.globalAlpha = a * 0.55;
+    ctx.fillRect(x-3, y, w+6, h);
+    ctx.globalAlpha = a * (i===focus ? 1 : .9);
+    ctx.fillStyle = V('--ink');
+    ctx.fillText(n.l, x, p.y + 0.5);
+  }
+
+  // ---- floor captions, pinned to the left margin
+  ctx.textAlign='left'; ctx.font='650 11px -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif';
+  for(const f of FLOORS){
+    const y0=(f.y-2.4)*cam.spread;
+    const cp=Math.cos(cam.pitch), sp=Math.sin(cam.pitch);
+    const y1=y0*cp, z1=y0*sp;
+    const k=760/Math.max(z1+cam.dist,60);
+    const py = H/2 + 30 - y1*k;
+    if(py < 96 || py > H-24) continue;
+    ctx.globalAlpha=.45; ctx.fillStyle=V('--ink-3');
+    ctx.fillText(f.label.toUpperCase(), 22, py);
+    ctx.globalAlpha=.16; ctx.strokeStyle=V('--ink-3'); ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(22, py+11); ctx.lineTo(150, py+11); ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+}
+
+// ---------------------------------------------------------------- picking
+function pick(mx,my){
+  let best=-1, bd=18*18;
+  for(let i=0;i<N.length;i++){
+    if(dim(N[i]) < 0.5) continue;
+    const p=P[i], dx=p.x-mx, dy=p.y-my, d=dx*dx+dy*dy;
+    if(d<bd){ bd=d; best=i; }
+  }
+  return best;
+}
+
+// ---------------------------------------------------------------- interaction
+let dragging=false, lastX=0, lastY=0, moved=0;
+cv.addEventListener('pointerdown', e=>{
+  dragging=true; moved=0; lastX=e.clientX; lastY=e.clientY;
+  cv.classList.add('drag'); cv.setPointerCapture(e.pointerId);
+});
+cv.addEventListener('pointermove', e=>{
+  const r = cv.getBoundingClientRect();
+  if(dragging){
+    const dx=e.clientX-lastX, dy=e.clientY-lastY;
+    moved += Math.abs(dx)+Math.abs(dy);
+    cam.yaw += dx*0.0060;
+    cam.pitch = Math.max(-0.25, Math.min(1.25, cam.pitch + dy*0.0045));
+    lastX=e.clientX; lastY=e.clientY;
+    spin=false; document.getElementById('spin').classList.remove('on');
+  } else {
+    const h = pick(e.clientX-r.left, e.clientY-r.top);
+    if(h!==hover){ hover=h; tip(h, e.clientX, e.clientY); }
+    else if(h>=0) tip(h, e.clientX, e.clientY);
+  }
+});
+cv.addEventListener('pointerup', e=>{
+  dragging=false; cv.classList.remove('drag');
+  if(moved < 5){
+    const r = cv.getBoundingClientRect();
+    const h = pick(e.clientX-r.left, e.clientY-r.top);
+    selected = (h===selected) ? -1 : h;
+    detail(selected);
+  }
+});
+cv.addEventListener('pointerleave', ()=>{ hover=-1; document.getElementById('tip').style.display='none'; });
+cv.addEventListener('wheel', e=>{
+  e.preventDefault();
+  cam.dist = Math.max(300, Math.min(2200, cam.dist * (1 + Math.sign(e.deltaY)*0.09)));
+}, {passive:false});
+
+const tipEl = document.getElementById('tip');
+function tip(i, cx, cy){
+  if(i<0){ tipEl.style.display='none'; return; }
+  const n=N[i];
+  const kindTxt = n.k==='file' ? (n.sub + ' · ' + n.s) : (n.k==='store' ? 'data store' : 'external host');
+  tipEl.innerHTML = '<b>'+esc(n.l)+'</b> <span>'+esc(kindTxt)+'</span>';
+  tipEl.style.display='block';
+  tipEl.style.left = Math.min(cx+14, window.innerWidth-tipEl.offsetWidth-10)+'px';
+  tipEl.style.top  = (cy+16)+'px';
+}
+function esc(s){ return String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+const detailEl = document.getElementById('detail'), introEl = document.getElementById('intro');
+function detail(i){
+  if(i<0){ detailEl.classList.remove('show'); introEl.style.display='block'; return; }
+  const n=N[i];
+  introEl.style.display='none'; detailEl.classList.add('show');
+  const col = colourOf(n);
+  if(n.k!=='file'){
+    const users = E.filter(e=>e[0]===i||e[1]===i).length;
+    detailEl.innerHTML =
+      '<span class="pill" style="background:'+col+'22;color:'+col+';border:1px solid '+col+'55">'+
+      (n.k==='store'?'DATA STORE':'EXTERNAL HOST')+'</span>'+
+      '<div class="fname">'+esc(n.l)+'</div>'+
+      '<div class="frole">'+users+' file'+(users===1?'':'s')+' connect to this.</div>';
+    return;
+  }
+  const m=n.m;
+  detailEl.innerHTML =
+    '<span class="pill" style="background:'+col+'22;color:'+col+';border:1px solid '+col+'55">'+esc(n.s)+'</span>'+
+    '<div class="fname">'+esc(n.l)+'.swift</div>'+
+    '<div class="frole">'+esc(m.role)+'</div>'+
+    '<dl>'+
+      '<dt>Area</dt><dd>'+esc(n.sub)+'</dd>'+
+      '<dt>Floor</dt><dd>'+esc(FLOORS[n.y].label)+'</dd>'+
+      '<dt>Persists to</dt><dd>'+esc(m.per==='none'?'—':m.per.replace(/;/g,' · '))+'</dd>'+
+      '<dt>Network</dt><dd>'+esc(m.net==='none'?'—':m.net)+'</dd>'+
+      '<dt>Depends on</dt><dd>'+esc(m.dep==='-'?'—':m.dep.replace(/;/g,' · '))+'</dd>'+
+    '</dl>'+
+    (m.why ? '<div class="why">'+esc(m.why)+'</div>' : '');
+}
+
+document.querySelectorAll('#filters .btn').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#filters .btn').forEach(x=>x.classList.toggle('on', x===b));
+  filter = b.dataset.f; selected=-1; detail(-1);
+}));
+document.getElementById('spin').addEventListener('click', e=>{
+  spin=!spin; e.currentTarget.classList.toggle('on', spin);
+});
+document.getElementById('reset').addEventListener('click', ()=>{
+  Object.assign(cam, HOME); cam.spread = +document.getElementById('spread').value;
+  selected=-1; detail(-1);
+});
+document.getElementById('spread').addEventListener('input', e=>{ cam.spread = +e.target.value; });
+
+function loop(){
+  if(spin && !dragging) cam.yaw += 0.0022;
+  draw();
+  requestAnimationFrame(loop);
+}
+resize(); loop();
+</script>
+</body>
+</html>

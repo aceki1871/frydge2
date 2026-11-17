@@ -1,0 +1,28 @@
+# Deploy config for the Stripe payments Worker.
+#
+# This is the piece that was missing: the existing wrangler.toml only routes the
+# recipe-sharing Worker, so POSTs to frydge2.com/stripe/* fell through to the
+# static host and returned "405 Method Not Allowed" (empty body). Binding this
+# Worker to frydge2.com/stripe/* fixes that.
+#
+# Deploy:
+#   wrangler deploy -c wrangler-stripe.toml
+#
+# Set the required secrets once (you'll be prompted for each value):
+#   wrangler secret put STRIPE_SECRET_KEY      -c wrangler-stripe.toml
+#   wrangler secret put STRIPE_PUBLISHABLE_KEY -c wrangler-stripe.toml
+#
+# Use your LIVE keys (sk_live_… / pk_live_…) for production, or TEST keys
+# (sk_test_… / pk_test_…) while testing — but the app charges real cards in
+# production, so match the key mode to your intent.
+
+# Note: this must match the worker that already owns the frydge2.com/stripe/*
+# route (and holds the STRIPE_ secrets), otherwise Cloudflare refuses the deploy
+# with a route-conflict error.
+name = "frydge2-stripe"
+main = "cloudflare-worker-stripe-payments.js"
+compatibility_date = "2026-05-25"
+
+routes = [
+  { pattern = "frydge2.com/stripe/*", zone_name = "frydge2.com" }
+]

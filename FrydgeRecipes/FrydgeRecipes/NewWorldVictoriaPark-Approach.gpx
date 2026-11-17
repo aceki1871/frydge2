@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    New World Victoria Park, APPROACH route.
+
+    2 College Hill, Freemans Bay, Auckland
+    Store centre: -36.8485, 174.7573
+
+    WHAT THIS TESTS: the CBD worst case. Within ~1.2 km of this store sit
+    Countdown Auckland City, Four Square Ponsonby, Countdown Ponsonby, and
+    three Queen Street pharmacies — six-plus monitored regions whose 800 m
+    circles overlap in a chain. Driving through the CBD can clip several
+    boundaries in one pass. Also exercises the "newworld" logo asset and New
+    World price matching in the Live Activity.
+
+    Route runs south-to-north up the longitude of the store; the New World
+    crossing happens between waypoints 3 and 4, but expect earlier fires from
+    the Ponsonby/CBD circles.
+
+    USE: Xcode, Debug, Simulate Location, NewWorldVictoriaPark-Approach
+-->
+<gpx version="1.1" creator="Frydge" xmlns="http://www.topografix.com/GPX/1/1">
+
+    <wpt lat="-36.8624" lon="174.7573">
+        <name>Approach 1, outside 1.5 km</name>
+        <time>2026-08-02T09:00:00Z</time>
+    </wpt>
+
+    <wpt lat="-36.8584" lon="174.7573">
+        <name>Approach 2, outside 1.1 km</name>
+        <time>2026-08-02T09:00:10Z</time>
+    </wpt>
+
+    <wpt lat="-36.8564" lon="174.7573">
+        <name>Approach 3, outside 870 m</name>
+        <time>2026-08-02T09:00:20Z</time>
+    </wpt>
+
+    <wpt lat="-36.8544" lon="174.7573">
+        <name>Approach 4, INSIDE 650 m, crossing</name>
+        <time>2026-08-02T09:00:30Z</time>
+    </wpt>
+
+    <wpt lat="-36.8524" lon="174.7573">
+        <name>Approach 5, inside 430 m</name>
+        <time>2026-08-02T09:00:40Z</time>
+    </wpt>
+
+    <wpt lat="-36.8485" lon="174.7573">
+        <name>New World Victoria Park, arrived</name>
+        <time>2026-08-02T09:00:50Z</time>
+    </wpt>
+
+</gpx>

@@ -1,0 +1,1441 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 100;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0303693E2FDD65A800008D3D /* CommonFoodPreloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0303693D2FDD65A700008D3D /* CommonFoodPreloader.swift */; };
+		0333CA772FA5E1C5003B6A41 /* package.json in Resources */ = {isa = PBXBuildFile; fileRef = 0333CA762FA5E1C5003B6A41 /* package.json */; };
+		035DA5E52DBC9D03008525E2 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 035DA5E42DBC9D03008525E2 /* WidgetKit.framework */; };
+		035DA5E72DBC9D03008525E2 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 035DA5E62DBC9D03008525E2 /* SwiftUI.framework */; };
+		035DA5F82DBC9D05008525E2 /* FrydgeRecipesLiveActivityExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 035DA5E32DBC9D03008525E2 /* FrydgeRecipesLiveActivityExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0362423B2FD4356300CCBEF4 /* Stripe in Frameworks */ = {isa = PBXBuildFile; productRef = 0362423A2FD4356300CCBEF4 /* Stripe */; };
+		0362423D2FD4356300CCBEF4 /* StripeApplePay in Frameworks */ = {isa = PBXBuildFile; productRef = 0362423C2FD4356300CCBEF4 /* StripeApplePay */; };
+		0362423F2FD4356300CCBEF4 /* StripeCardScan in Frameworks */ = {isa = PBXBuildFile; productRef = 0362423E2FD4356300CCBEF4 /* StripeCardScan */; };
+		036242412FD4356300CCBEF4 /* StripeConnect in Frameworks */ = {isa = PBXBuildFile; productRef = 036242402FD4356300CCBEF4 /* StripeConnect */; };
+		036242432FD4356300CCBEF4 /* StripeIdentity in Frameworks */ = {isa = PBXBuildFile; productRef = 036242422FD4356300CCBEF4 /* StripeIdentity */; };
+		036242452FD4356300CCBEF4 /* StripeIssuing in Frameworks */ = {isa = PBXBuildFile; productRef = 036242442FD4356300CCBEF4 /* StripeIssuing */; };
+		036242472FD4356300CCBEF4 /* StripePaymentSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 036242462FD4356300CCBEF4 /* StripePaymentSheet */; };
+		036242492FD4356300CCBEF4 /* StripePayments in Frameworks */ = {isa = PBXBuildFile; productRef = 036242482FD4356300CCBEF4 /* StripePayments */; };
+		0362424B2FD4356300CCBEF4 /* StripePaymentsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0362424A2FD4356300CCBEF4 /* StripePaymentsUI */; };
+		037E5B382F130F8C00977239 /* ShareViewController.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 037E5B2E2F130F8C00977239 /* ShareViewController.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		037E5C392F179BE400977239 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 037E5C382F179BE400977239 /* PrivacyInfo.xcprivacy */; };
+		038905552FCAFDE100E2A936 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 035DA5E42DBC9D03008525E2 /* WidgetKit.framework */; };
+		038905562FCAFDE100E2A936 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 035DA5E62DBC9D03008525E2 /* SwiftUI.framework */; };
+		038905672FCAFDE200E2A936 /* listwidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 038905542FCAFDE100E2A936 /* listwidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		03BBA44E2FC26B89003AED6F /* StripeTerminal in Frameworks */ = {isa = PBXBuildFile; productRef = 03BBA44D2FC26B89003AED6F /* StripeTerminal */; };
+		03CA44822DB7A51F009981D9 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 03CA44812DB7A51F009981D9 /* SwiftSoup */; };
+		03EF1D832CDDF21B00075737 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EF1D822CDDF21B00075737 /* UserNotifications.framework */; };
+		03EF1D852CDDF21B00075737 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EF1D842CDDF21B00075737 /* UserNotificationsUI.framework */; };
+		03EF1D8F2CDDF21B00075737 /* ShoppingListNotificationExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 03EF1D812CDDF21B00075737 /* ShoppingListNotificationExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		030694D32CB3BD3500E68B25 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 030694BA2CB3BD3300E68B25 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 030694C12CB3BD3300E68B25;
+			remoteInfo = FrydgeRecipes;
+		};
+		030694DD2CB3BD3500E68B25 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 030694BA2CB3BD3300E68B25 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 030694C12CB3BD3300E68B25;
+			remoteInfo = FrydgeRecipes;
+		};
+		035DA5F62DBC9D05008525E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 030694BA2CB3BD3300E68B25 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 035DA5E22DBC9D03008525E2;
+			remoteInfo = FrydgeRecipesLiveActivityExtension;
+		};
+		037E5B362F130F8C00977239 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 030694BA2CB3BD3300E68B25 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 037E5B2D2F130F8C00977239;
+			remoteInfo = ShareViewController;
+		};
+		038905652FCAFDE200E2A936 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 030694BA2CB3BD3300E68B25 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 038905532FCAFDE100E2A936;
+			remoteInfo = listwidgetExtension;
+		};
+		03EF1D8D2CDDF21B00075737 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 030694BA2CB3BD3300E68B25 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 03EF1D802CDDF21B00075737;
+			remoteInfo = ShoppingListNotificationExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0306955B2CB64D8700E68B25 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolder = PlugIns;
+			files = (
+				037E5B382F130F8C00977239 /* ShareViewController.appex in Embed Foundation Extensions */,
+				035DA5F82DBC9D05008525E2 /* FrydgeRecipesLiveActivityExtension.appex in Embed Foundation Extensions */,
+				038905672FCAFDE200E2A936 /* listwidgetExtension.appex in Embed Foundation Extensions */,
+				03EF1D8F2CDDF21B00075737 /* ShoppingListNotificationExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+		};
+		036C71572CE1939900719698 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolder = PlugIns;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0303693D2FDD65A700008D3D /* CommonFoodPreloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFoodPreloader.swift; sourceTree = "<group>"; };
+		030694C22CB3BD3300E68B25 /* FrydgeRecipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrydgeRecipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		030694D22CB3BD3500E68B25 /* FrydgeRecipesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FrydgeRecipesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		030694DC2CB3BD3500E68B25 /* FrydgeRecipesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FrydgeRecipesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0333CA762FA5E1C5003B6A41 /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
+		035DA5E32DBC9D03008525E2 /* FrydgeRecipesLiveActivityExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FrydgeRecipesLiveActivityExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		035DA5E42DBC9D03008525E2 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		035DA5E62DBC9D03008525E2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		03632059301EB49A00075680 /* WoolworthsMtWellington.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = WoolworthsMtWellington.gpx; path = ../../../../Downloads/WoolworthsMtWellington.gpx; sourceTree = "<group>"; };
+		037E5B2E2F130F8C00977239 /* ShareViewController.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareViewController.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		037E5C382F179BE400977239 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		038905542FCAFDE100E2A936 /* listwidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = listwidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		038905752FCB8CBD00E2A936 /* listwidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = listwidgetExtension.entitlements; sourceTree = "<group>"; };
+		039879EA2FC04D4400F3025C /* FrydgeRecipesLiveActivityExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FrydgeRecipesLiveActivityExtension.entitlements; sourceTree = "<group>"; };
+		03A4B7992DA117B800E902AB /* openfoodfacts-swift-main-2 */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "openfoodfacts-swift-main-2"; sourceTree = "<group>"; };
+		03EF1D812CDDF21B00075737 /* ShoppingListNotificationExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShoppingListNotificationExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		03EF1D822CDDF21B00075737 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		03EF1D842CDDF21B00075737 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		033C2BF72FC0482900149A7D /* Exceptions for "FrydgeRecipes" folder in "FrydgeRecipes" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"cloudflare-worker-live-activity.js",
+				"cloudflare-worker-marketplace.js",
+				"cloudflare-worker-product-matching.js",
+				"cloudflare-worker-recipe-sharing.js",
+				"cloudflare-worker-stripe-payments.js",
+				Info.plist,
+				"schema-marketplace.sql",
+				"stripe-backend-configured.js",
+				"stripe-backend-example.js",
+				"wrangler-liveactivity.toml",
+				"wrangler-marketplace.toml",
+				"wrangler-stripe.toml",
+				wrangler.toml,
+			);
+			target = 030694C12CB3BD3300E68B25 /* FrydgeRecipes */;
+		};
+		0389056B2FCAFDE200E2A936 /* Exceptions for "listwidget" folder in "listwidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 038905532FCAFDE100E2A936 /* listwidgetExtension */;
+		};
+		03AB74C02FBF1BFD001C9A84 /* Exceptions for "ShoppingListNotificationExtension" folder in "ShoppingListNotificationExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 03EF1D802CDDF21B00075737 /* ShoppingListNotificationExtension */;
+		};
+		03AB74C12FBF1C02001C9A84 /* Exceptions for "FrydgeRecipesLiveActivity" folder in "FrydgeRecipesLiveActivityExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 035DA5E22DBC9D03008525E2 /* FrydgeRecipesLiveActivityExtension */;
+		};
+		03AB74C22FBF1C05001C9A84 /* Exceptions for "ShareViewController" folder in "ShareViewController" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 037E5B2D2F130F8C00977239 /* ShareViewController */;
+		};
+		03AB74C42FBF1C92001C9A84 /* Exceptions for "FrydgeRecipes" folder in "FrydgeRecipesLiveActivityExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ShoppingListActivityAttributes.swift,
+			);
+			target = 035DA5E22DBC9D03008525E2 /* FrydgeRecipesLiveActivityExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		030694C42CB3BD3300E68B25 /* FrydgeRecipes */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				033C2BF72FC0482900149A7D /* Exceptions for "FrydgeRecipes" folder in "FrydgeRecipes" target */,
+				03AB74C42FBF1C92001C9A84 /* Exceptions for "FrydgeRecipes" folder in "FrydgeRecipesLiveActivityExtension" target */,
+			);
+			path = FrydgeRecipes;
+			sourceTree = "<group>";
+		};
+		030694D52CB3BD3500E68B25 /* FrydgeRecipesTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = FrydgeRecipesTests;
+			sourceTree = "<group>";
+		};
+		030694DF2CB3BD3500E68B25 /* FrydgeRecipesUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = FrydgeRecipesUITests;
+			sourceTree = "<group>";
+		};
+		035DA5E82DBC9D03008525E2 /* FrydgeRecipesLiveActivity */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				03AB74C12FBF1C02001C9A84 /* Exceptions for "FrydgeRecipesLiveActivity" folder in "FrydgeRecipesLiveActivityExtension" target */,
+			);
+			path = FrydgeRecipesLiveActivity;
+			sourceTree = "<group>";
+		};
+		037E5B2F2F130F8C00977239 /* ShareViewController */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				03AB74C22FBF1C05001C9A84 /* Exceptions for "ShareViewController" folder in "ShareViewController" target */,
+			);
+			path = ShareViewController;
+			sourceTree = "<group>";
+		};
+		038905572FCAFDE100E2A936 /* listwidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0389056B2FCAFDE200E2A936 /* Exceptions for "listwidget" folder in "listwidgetExtension" target */,
+			);
+			path = listwidget;
+			sourceTree = "<group>";
+		};
+		039DDA012F9F564B004C86FF /* Frydge2Watch Watch App */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Frydge2Watch Watch App";
+			sourceTree = "<group>";
+		};
+		039DDA0F2F9F564C004C86FF /* Frydge2Watch Watch AppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Frydge2Watch Watch AppTests";
+			sourceTree = "<group>";
+		};
+		039DDA192F9F564C004C86FF /* Frydge2Watch Watch AppUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Frydge2Watch Watch AppUITests";
+			sourceTree = "<group>";
+		};
+		03EF1D862CDDF21B00075737 /* ShoppingListNotificationExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				03AB74C02FBF1BFD001C9A84 /* Exceptions for "ShoppingListNotificationExtension" folder in "ShoppingListNotificationExtension" target */,
+			);
+			path = ShoppingListNotificationExtension;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		030694BF2CB3BD3300E68B25 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				036242492FD4356300CCBEF4 /* StripePayments in Frameworks */,
+				03CA44822DB7A51F009981D9 /* SwiftSoup in Frameworks */,
+				0362423D2FD4356300CCBEF4 /* StripeApplePay in Frameworks */,
+				0362424B2FD4356300CCBEF4 /* StripePaymentsUI in Frameworks */,
+				03BBA44E2FC26B89003AED6F /* StripeTerminal in Frameworks */,
+				036242432FD4356300CCBEF4 /* StripeIdentity in Frameworks */,
+				0362423F2FD4356300CCBEF4 /* StripeCardScan in Frameworks */,
+				036242412FD4356300CCBEF4 /* StripeConnect in Frameworks */,
+				036242452FD4356300CCBEF4 /* StripeIssuing in Frameworks */,
+				036242472FD4356300CCBEF4 /* StripePaymentSheet in Frameworks */,
+				0362423B2FD4356300CCBEF4 /* Stripe in Frameworks */,
+			);
+		};
+		030694CF2CB3BD3500E68B25 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		030694D92CB3BD3500E68B25 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		035DA5E02DBC9D03008525E2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				035DA5E72DBC9D03008525E2 /* SwiftUI.framework in Frameworks */,
+				035DA5E52DBC9D03008525E2 /* WidgetKit.framework in Frameworks */,
+			);
+		};
+		037E5B2B2F130F8C00977239 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		038905512FCAFDE100E2A936 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				038905562FCAFDE100E2A936 /* SwiftUI.framework in Frameworks */,
+				038905552FCAFDE100E2A936 /* WidgetKit.framework in Frameworks */,
+			);
+		};
+		03EF1D7E2CDDF21B00075737 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				03EF1D852CDDF21B00075737 /* UserNotificationsUI.framework in Frameworks */,
+				03EF1D832CDDF21B00075737 /* UserNotifications.framework in Frameworks */,
+			);
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		030694B92CB3BD3300E68B25 = {
+			isa = PBXGroup;
+			children = (
+				03632059301EB49A00075680 /* WoolworthsMtWellington.gpx */,
+				038905752FCB8CBD00E2A936 /* listwidgetExtension.entitlements */,
+				039879EA2FC04D4400F3025C /* FrydgeRecipesLiveActivityExtension.entitlements */,
+				037E5C382F179BE400977239 /* PrivacyInfo.xcprivacy */,
+				030694C42CB3BD3300E68B25 /* FrydgeRecipes */,
+				030694D52CB3BD3500E68B25 /* FrydgeRecipesTests */,
+				030694DF2CB3BD3500E68B25 /* FrydgeRecipesUITests */,
+				03EF1D862CDDF21B00075737 /* ShoppingListNotificationExtension */,
+				035DA5E82DBC9D03008525E2 /* FrydgeRecipesLiveActivity */,
+				037E5B2F2F130F8C00977239 /* ShareViewController */,
+				039DDA012F9F564B004C86FF /* Frydge2Watch Watch App */,
+				039DDA0F2F9F564C004C86FF /* Frydge2Watch Watch AppTests */,
+				039DDA192F9F564C004C86FF /* Frydge2Watch Watch AppUITests */,
+				038905572FCAFDE100E2A936 /* listwidget */,
+				03E925502CC7D60200ED0045 /* Frameworks */,
+				030694C32CB3BD3300E68B25 /* Products */,
+				0333CA762FA5E1C5003B6A41 /* package.json */,
+				0389056C2FCB00C300E2A936 /* Shared */,
+				0303693D2FDD65A700008D3D /* CommonFoodPreloader.swift */,
+			);
+			sourceTree = "<group>";
+		};
+		030694C32CB3BD3300E68B25 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				030694C22CB3BD3300E68B25 /* FrydgeRecipes.app */,
+				030694D22CB3BD3500E68B25 /* FrydgeRecipesTests.xctest */,
+				030694DC2CB3BD3500E68B25 /* FrydgeRecipesUITests.xctest */,
+				03EF1D812CDDF21B00075737 /* ShoppingListNotificationExtension.appex */,
+				035DA5E32DBC9D03008525E2 /* FrydgeRecipesLiveActivityExtension.appex */,
+				037E5B2E2F130F8C00977239 /* ShareViewController.appex */,
+				038905542FCAFDE100E2A936 /* listwidgetExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0389056C2FCB00C300E2A936 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		03E925502CC7D60200ED0045 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				03A4B7992DA117B800E902AB /* openfoodfacts-swift-main-2 */,
+				03EF1D822CDDF21B00075737 /* UserNotifications.framework */,
+				03EF1D842CDDF21B00075737 /* UserNotificationsUI.framework */,
+				035DA5E42DBC9D03008525E2 /* WidgetKit.framework */,
+				035DA5E62DBC9D03008525E2 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		030694C12CB3BD3300E68B25 /* FrydgeRecipes */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 030694E62CB3BD3500E68B25 /* Build configuration list for PBXNativeTarget "FrydgeRecipes" */;
+			buildPhases = (
+				030694BE2CB3BD3300E68B25 /* Sources */,
+				030694BF2CB3BD3300E68B25 /* Frameworks */,
+				030694C02CB3BD3300E68B25 /* Resources */,
+				0306955B2CB64D8700E68B25 /* Embed Foundation Extensions */,
+				036C71572CE1939900719698 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				03EF1D8E2CDDF21B00075737 /* PBXTargetDependency */,
+				035DA5F72DBC9D05008525E2 /* PBXTargetDependency */,
+				037E5B372F130F8C00977239 /* PBXTargetDependency */,
+				038905662FCAFDE200E2A936 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				030694C42CB3BD3300E68B25 /* FrydgeRecipes */,
+			);
+			name = FrydgeRecipes;
+			packageProductDependencies = (
+				03BBA44D2FC26B89003AED6F /* StripeTerminal */,
+				0362423A2FD4356300CCBEF4 /* Stripe */,
+				0362423C2FD4356300CCBEF4 /* StripeApplePay */,
+				0362423E2FD4356300CCBEF4 /* StripeCardScan */,
+				036242402FD4356300CCBEF4 /* StripeConnect */,
+				036242422FD4356300CCBEF4 /* StripeIdentity */,
+				036242442FD4356300CCBEF4 /* StripeIssuing */,
+				036242462FD4356300CCBEF4 /* StripePaymentSheet */,
+				036242482FD4356300CCBEF4 /* StripePayments */,
+				0362424A2FD4356300CCBEF4 /* StripePaymentsUI */,
+			);
+			productName = FrydgeRecipes;
+			productReference = 030694C22CB3BD3300E68B25 /* FrydgeRecipes.app */;
+			productType = "com.apple.product-type.application";
+		};
+		030694D12CB3BD3500E68B25 /* FrydgeRecipesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 030694E92CB3BD3500E68B25 /* Build configuration list for PBXNativeTarget "FrydgeRecipesTests" */;
+			buildPhases = (
+				030694CE2CB3BD3500E68B25 /* Sources */,
+				030694CF2CB3BD3500E68B25 /* Frameworks */,
+				030694D02CB3BD3500E68B25 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				030694D42CB3BD3500E68B25 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				030694D52CB3BD3500E68B25 /* FrydgeRecipesTests */,
+			);
+			name = FrydgeRecipesTests;
+			productName = FrydgeRecipesTests;
+			productReference = 030694D22CB3BD3500E68B25 /* FrydgeRecipesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		030694DB2CB3BD3500E68B25 /* FrydgeRecipesUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 030694EC2CB3BD3500E68B25 /* Build configuration list for PBXNativeTarget "FrydgeRecipesUITests" */;
+			buildPhases = (
+				030694D82CB3BD3500E68B25 /* Sources */,
+				030694D92CB3BD3500E68B25 /* Frameworks */,
+				030694DA2CB3BD3500E68B25 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				030694DE2CB3BD3500E68B25 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				030694DF2CB3BD3500E68B25 /* FrydgeRecipesUITests */,
+			);
+			name = FrydgeRecipesUITests;
+			productName = FrydgeRecipesUITests;
+			productReference = 030694DC2CB3BD3500E68B25 /* FrydgeRecipesUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		035DA5E22DBC9D03008525E2 /* FrydgeRecipesLiveActivityExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 035DA5FB2DBC9D05008525E2 /* Build configuration list for PBXNativeTarget "FrydgeRecipesLiveActivityExtension" */;
+			buildPhases = (
+				035DA5DF2DBC9D03008525E2 /* Sources */,
+				035DA5E02DBC9D03008525E2 /* Frameworks */,
+				035DA5E12DBC9D03008525E2 /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				035DA5E82DBC9D03008525E2 /* FrydgeRecipesLiveActivity */,
+			);
+			name = FrydgeRecipesLiveActivityExtension;
+			productName = FrydgeRecipesLiveActivityExtension;
+			productReference = 035DA5E32DBC9D03008525E2 /* FrydgeRecipesLiveActivityExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		037E5B2D2F130F8C00977239 /* ShareViewController */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 037E5B392F130F8C00977239 /* Build configuration list for PBXNativeTarget "ShareViewController" */;
+			buildPhases = (
+				037E5B2A2F130F8C00977239 /* Sources */,
+				037E5B2B2F130F8C00977239 /* Frameworks */,
+				037E5B2C2F130F8C00977239 /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				037E5B2F2F130F8C00977239 /* ShareViewController */,
+			);
+			name = ShareViewController;
+			productName = ShareViewController;
+			productReference = 037E5B2E2F130F8C00977239 /* ShareViewController.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		038905532FCAFDE100E2A936 /* listwidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 038905682FCAFDE200E2A936 /* Build configuration list for PBXNativeTarget "listwidgetExtension" */;
+			buildPhases = (
+				038905502FCAFDE100E2A936 /* Sources */,
+				038905512FCAFDE100E2A936 /* Frameworks */,
+				038905522FCAFDE100E2A936 /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				038905572FCAFDE100E2A936 /* listwidget */,
+			);
+			name = listwidgetExtension;
+			productName = listwidgetExtension;
+			productReference = 038905542FCAFDE100E2A936 /* listwidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		03EF1D802CDDF21B00075737 /* ShoppingListNotificationExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03EF1D902CDDF21B00075737 /* Build configuration list for PBXNativeTarget "ShoppingListNotificationExtension" */;
+			buildPhases = (
+				03EF1D7D2CDDF21B00075737 /* Sources */,
+				03EF1D7E2CDDF21B00075737 /* Frameworks */,
+				03EF1D7F2CDDF21B00075737 /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				03EF1D862CDDF21B00075737 /* ShoppingListNotificationExtension */,
+			);
+			name = ShoppingListNotificationExtension;
+			productName = ShoppingListNotificationExtension;
+			productReference = 03EF1D812CDDF21B00075737 /* ShoppingListNotificationExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		030694BA2CB3BD3300E68B25 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					New,
+				);
+				LastSwiftUpdateCheck = 2650;
+				LastUpgradeCheck = 2610;
+				TargetAttributes = {
+					030694C12CB3BD3300E68B25 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					030694D12CB3BD3500E68B25 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 030694C12CB3BD3300E68B25;
+					};
+					030694DB2CB3BD3500E68B25 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 030694C12CB3BD3300E68B25;
+					};
+					035DA5E22DBC9D03008525E2 = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					037E5B2D2F130F8C00977239 = {
+						CreatedOnToolsVersion = 26.2;
+					};
+					038905532FCAFDE100E2A936 = {
+						CreatedOnToolsVersion = 26.5;
+					};
+					03EF1D802CDDF21B00075737 = {
+						CreatedOnToolsVersion = 16.1;
+					};
+				};
+			};
+			buildConfigurationList = 030694BD2CB3BD3300E68B25 /* Build configuration list for PBXProject "FrydgeRecipes" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 030694B92CB3BD3300E68B25;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				03CA44802DB7A51F009981D9 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				03B983442FC12AEC0008662D /* XCRemoteSwiftPackageReference "stripe-terminal-ios" */,
+				036242392FD4356300CCBEF4 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */,
+			);
+			preferredProjectObjectVersion = 100;
+			productRefGroup = 030694C32CB3BD3300E68B25 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				030694C12CB3BD3300E68B25 /* FrydgeRecipes */,
+				030694D12CB3BD3500E68B25 /* FrydgeRecipesTests */,
+				030694DB2CB3BD3500E68B25 /* FrydgeRecipesUITests */,
+				03EF1D802CDDF21B00075737 /* ShoppingListNotificationExtension */,
+				035DA5E22DBC9D03008525E2 /* FrydgeRecipesLiveActivityExtension */,
+				037E5B2D2F130F8C00977239 /* ShareViewController */,
+				038905532FCAFDE100E2A936 /* listwidgetExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		030694C02CB3BD3300E68B25 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+				037E5C392F179BE400977239 /* PrivacyInfo.xcprivacy in Resources */,
+				0333CA772FA5E1C5003B6A41 /* package.json in Resources */,
+			);
+		};
+		030694D02CB3BD3500E68B25 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		030694DA2CB3BD3500E68B25 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		035DA5E12DBC9D03008525E2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		037E5B2C2F130F8C00977239 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		038905522FCAFDE100E2A936 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		03EF1D7F2CDDF21B00075737 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		030694BE2CB3BD3300E68B25 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+				0303693E2FDD65A800008D3D /* CommonFoodPreloader.swift in Sources */,
+			);
+		};
+		030694CE2CB3BD3500E68B25 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		030694D82CB3BD3500E68B25 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		035DA5DF2DBC9D03008525E2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		037E5B2A2F130F8C00977239 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		038905502FCAFDE100E2A936 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		03EF1D7D2CDDF21B00075737 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		030694D42CB3BD3500E68B25 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 030694C12CB3BD3300E68B25 /* FrydgeRecipes */;
+			targetProxy = 030694D32CB3BD3500E68B25 /* PBXContainerItemProxy */;
+		};
+		030694DE2CB3BD3500E68B25 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 030694C12CB3BD3300E68B25 /* FrydgeRecipes */;
+			targetProxy = 030694DD2CB3BD3500E68B25 /* PBXContainerItemProxy */;
+		};
+		035DA5F72DBC9D05008525E2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 035DA5E22DBC9D03008525E2 /* FrydgeRecipesLiveActivityExtension */;
+			targetProxy = 035DA5F62DBC9D05008525E2 /* PBXContainerItemProxy */;
+		};
+		037E5B372F130F8C00977239 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 037E5B2D2F130F8C00977239 /* ShareViewController */;
+			targetProxy = 037E5B362F130F8C00977239 /* PBXContainerItemProxy */;
+		};
+		038905662FCAFDE200E2A936 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 038905532FCAFDE100E2A936 /* listwidgetExtension */;
+			targetProxy = 038905652FCAFDE200E2A936 /* PBXContainerItemProxy */;
+		};
+		03EF1D8E2CDDF21B00075737 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 03EF1D802CDDF21B00075737 /* ShoppingListNotificationExtension */;
+			targetProxy = 03EF1D8D2CDDF21B00075737 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		030694E42CB3BD3500E68B25 /* Debug configuration for PBXProject "FrydgeRecipes" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = A2H3YQ5U79;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		030694E52CB3BD3500E68B25 /* Release configuration for PBXProject "FrydgeRecipes" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = A2H3YQ5U79;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		030694E72CB3BD3500E68B25 /* Debug configuration for PBXNativeTarget "FrydgeRecipes" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = FrydgeRecipes/FrydgeRecipes.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 182;
+				DEVELOPMENT_ASSET_PATHS = "\"FrydgeRecipes/Preview Content\"";
+				DEVELOPMENT_TEAM = A2H3YQ5U79;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FrydgeRecipes/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Frydge 2.0";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Frydge uses Bluetooth to connect to Stripe Tap to Pay readers for in-person payments.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Frydge uses the camera to scan barcodes, photograph food so it can be identified automatically, and scan receipts and recipe pages.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Frydge uses Face ID to sign you back into your account without re-entering your password.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Frydge uses your location in the background to notify you when you are near a store that has items on your shopping list.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Frydge uses your location in the background to notify you when you are near a store that stocks items on your shopping list.";
+				INFOPLIST_KEY_NSLocationUsageDescription = "Frydge uses your location to find nearby stores and sort them by distance.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Frydge uses your location to show nearby stores on the marketplace map and sort them by distance.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Frydge uses the microphone to listen for voice commands while you cook and to process recipe videos you share with the app.";
+				INFOPLIST_KEY_NSNearbyInteractionUsageDescription = "Frydge uses nearby interaction to hand off shopping lists to people close to you.";
+				INFOPLIST_KEY_NSNetworkVolumesUsageDescription = "This app requires internet access to sync recipes and fetch location data for nearby stores";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Frydge lets you attach your own photos to fridge items, shopping list items and recipes.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Frydge uses speech recognition to extract recipes from videos and to hear voice commands (next, back, repeat) during Cook Mode.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_NSSupportsLiveActivitiesFrequentUpdates = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 4.7.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "Clark-Online.Recipes";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		030694E82CB3BD3500E68B25 /* Release configuration for PBXNativeTarget "FrydgeRecipes" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = FrydgeRecipes/FrydgeRecipes.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 182;
+				DEVELOPMENT_ASSET_PATHS = "\"FrydgeRecipes/Preview Content\"";
+				DEVELOPMENT_TEAM = A2H3YQ5U79;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FrydgeRecipes/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Frydge 2.0";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Frydge uses Bluetooth to connect to Stripe Tap to Pay readers for in-person payments.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Frydge uses the camera to scan barcodes, photograph food so it can be identified automatically, and scan receipts and recipe pages.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Frydge uses Face ID to sign you back into your account without re-entering your password.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Frydge uses your location in the background to notify you when you are near a store that has items on your shopping list.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Frydge uses your location in the background to notify you when you are near a store that stocks items on your shopping list.";
+				INFOPLIST_KEY_NSLocationUsageDescription = "Frydge uses your location to find nearby stores and sort them by distance.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Frydge uses your location to show nearby stores on the marketplace map and sort them by distance.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Frydge uses the microphone to listen for voice commands while you cook and to process recipe videos you share with the app.";
+				INFOPLIST_KEY_NSNearbyInteractionUsageDescription = "Frydge uses nearby interaction to hand off shopping lists to people close to you.";
+				INFOPLIST_KEY_NSNetworkVolumesUsageDescription = "This app requires internet access to sync recipes and fetch location data for nearby stores";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Frydge lets you attach your own photos to fridge items, shopping list items and recipes.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Frydge uses speech recognition to extract recipes from videos and to hear voice commands (next, back, repeat) during Cook Mode.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_NSSupportsLiveActivitiesFrequentUpdates = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 4.7.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "Clark-Online.Recipes";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		030694EA2CB3BD3500E68B25 /* Debug configuration for PBXNativeTarget "FrydgeRecipesTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Clark-Online.FrydgeRecipesTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FrydgeRecipes.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FrydgeRecipes";
+			};
+			name = Debug;
+		};
+		030694EB2CB3BD3500E68B25 /* Release configuration for PBXNativeTarget "FrydgeRecipesTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Clark-Online.FrydgeRecipesTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FrydgeRecipes.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FrydgeRecipes";
+			};
+			name = Release;
+		};
+		030694ED2CB3BD3500E68B25 /* Debug configuration for PBXNativeTarget "FrydgeRecipesUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Clark-Online.FrydgeRecipesUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = FrydgeRecipes;
+			};
+			name = Debug;
+		};
+		030694EE2CB3BD3500E68B25 /* Release configuration for PBXNativeTarget "FrydgeRecipesUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Clark-Online.FrydgeRecipesUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = FrydgeRecipes;
+			};
+			name = Release;
+		};
+		035DA5F92DBC9D05008525E2 /* Debug configuration for PBXNativeTarget "FrydgeRecipesLiveActivityExtension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = FrydgeRecipesLiveActivityExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 182;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FrydgeRecipesLiveActivity/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FrydgeRecipesLiveActivity;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 4.7.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "Clark-Online.Recipes.FrydgeRecipesLiveActivity";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		035DA5FA2DBC9D05008525E2 /* Release configuration for PBXNativeTarget "FrydgeRecipesLiveActivityExtension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = FrydgeRecipesLiveActivityExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 182;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FrydgeRecipesLiveActivity/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FrydgeRecipesLiveActivity;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 4.7.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "Clark-Online.Recipes.FrydgeRecipesLiveActivity";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		037E5B3A2F130F8C00977239 /* Debug configuration for PBXNativeTarget "ShareViewController" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareViewController/ShareViewController.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 182;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ShareViewController/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "clark-online.recipes.shareviewcontroller";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 4.7.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "Clark-Online.Recipes.ShareViewController";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		037E5B3B2F130F8C00977239 /* Release configuration for PBXNativeTarget "ShareViewController" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareViewController/ShareViewController.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 182;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ShareViewController/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "clark-online.recipes.shareviewcontroller";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 4.7.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "Clark-Online.Recipes.ShareViewController";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		038905692FCAFDE200E2A936 /* Debug configuration for PBXNativeTarget "listwidgetExtension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = listwidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 182;
+				DEVELOPMENT_TEAM = A2H3YQ5U79;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = listwidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Frydge;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 4.7.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "Clark-Online.Recipes.listwidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0389056A2FCAFDE200E2A936 /* Release configuration for PBXNativeTarget "listwidgetExtension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = listwidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 182;
+				DEVELOPMENT_TEAM = A2H3YQ5U79;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = listwidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Frydge;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 4.7.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "Clark-Online.Recipes.listwidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		03EF1D912CDDF21B00075737 /* Debug configuration for PBXNativeTarget "ShoppingListNotificationExtension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShoppingListNotificationExtension/ShoppingListNotificationExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 182;
+				DEVELOPMENT_TEAM = A2H3YQ5U79;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ShoppingListNotificationExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FrydgeRecipesLiveActivity;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 4.7.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "Clark-Online.Recipes.ShoppingListNotificationExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		03EF1D922CDDF21B00075737 /* Release configuration for PBXNativeTarget "ShoppingListNotificationExtension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShoppingListNotificationExtension/ShoppingListNotificationExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 182;
+				DEVELOPMENT_TEAM = A2H3YQ5U79;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ShoppingListNotificationExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FrydgeRecipesLiveActivity;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 4.7.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "Clark-Online.Recipes.ShoppingListNotificationExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		030694BD2CB3BD3300E68B25 /* Build configuration list for PBXProject "FrydgeRecipes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				030694E42CB3BD3500E68B25 /* Debug configuration for PBXProject "FrydgeRecipes" */,
+				030694E52CB3BD3500E68B25 /* Release configuration for PBXProject "FrydgeRecipes" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		030694E62CB3BD3500E68B25 /* Build configuration list for PBXNativeTarget "FrydgeRecipes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				030694E72CB3BD3500E68B25 /* Debug configuration for PBXNativeTarget "FrydgeRecipes" */,
+				030694E82CB3BD3500E68B25 /* Release configuration for PBXNativeTarget "FrydgeRecipes" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		030694E92CB3BD3500E68B25 /* Build configuration list for PBXNativeTarget "FrydgeRecipesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				030694EA2CB3BD3500E68B25 /* Debug configuration for PBXNativeTarget "FrydgeRecipesTests" */,
+				030694EB2CB3BD3500E68B25 /* Release configuration for PBXNativeTarget "FrydgeRecipesTests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		030694EC2CB3BD3500E68B25 /* Build configuration list for PBXNativeTarget "FrydgeRecipesUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				030694ED2CB3BD3500E68B25 /* Debug configuration for PBXNativeTarget "FrydgeRecipesUITests" */,
+				030694EE2CB3BD3500E68B25 /* Release configuration for PBXNativeTarget "FrydgeRecipesUITests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		035DA5FB2DBC9D05008525E2 /* Build configuration list for PBXNativeTarget "FrydgeRecipesLiveActivityExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				035DA5F92DBC9D05008525E2 /* Debug configuration for PBXNativeTarget "FrydgeRecipesLiveActivityExtension" */,
+				035DA5FA2DBC9D05008525E2 /* Release configuration for PBXNativeTarget "FrydgeRecipesLiveActivityExtension" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		037E5B392F130F8C00977239 /* Build configuration list for PBXNativeTarget "ShareViewController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				037E5B3A2F130F8C00977239 /* Debug configuration for PBXNativeTarget "ShareViewController" */,
+				037E5B3B2F130F8C00977239 /* Release configuration for PBXNativeTarget "ShareViewController" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		038905682FCAFDE200E2A936 /* Build configuration list for PBXNativeTarget "listwidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				038905692FCAFDE200E2A936 /* Debug configuration for PBXNativeTarget "listwidgetExtension" */,
+				0389056A2FCAFDE200E2A936 /* Release configuration for PBXNativeTarget "listwidgetExtension" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		03EF1D902CDDF21B00075737 /* Build configuration list for PBXNativeTarget "ShoppingListNotificationExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03EF1D912CDDF21B00075737 /* Debug configuration for PBXNativeTarget "ShoppingListNotificationExtension" */,
+				03EF1D922CDDF21B00075737 /* Release configuration for PBXNativeTarget "ShoppingListNotificationExtension" */,
+			);
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		036242392FD4356300CCBEF4 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stripe/stripe-ios-spm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 25.16.0;
+			};
+		};
+		03B983442FC12AEC0008662D /* XCRemoteSwiftPackageReference "stripe-terminal-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stripe/stripe-terminal-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.5.0;
+			};
+		};
+		03CA44802DB7A51F009981D9 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.7;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0362423A2FD4356300CCBEF4 /* Stripe */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 036242392FD4356300CCBEF4 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = Stripe;
+		};
+		0362423C2FD4356300CCBEF4 /* StripeApplePay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 036242392FD4356300CCBEF4 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripeApplePay;
+		};
+		0362423E2FD4356300CCBEF4 /* StripeCardScan */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 036242392FD4356300CCBEF4 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripeCardScan;
+		};
+		036242402FD4356300CCBEF4 /* StripeConnect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 036242392FD4356300CCBEF4 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripeConnect;
+		};
+		036242422FD4356300CCBEF4 /* StripeIdentity */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 036242392FD4356300CCBEF4 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripeIdentity;
+		};
+		036242442FD4356300CCBEF4 /* StripeIssuing */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 036242392FD4356300CCBEF4 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripeIssuing;
+		};
+		036242462FD4356300CCBEF4 /* StripePaymentSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 036242392FD4356300CCBEF4 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripePaymentSheet;
+		};
+		036242482FD4356300CCBEF4 /* StripePayments */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 036242392FD4356300CCBEF4 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripePayments;
+		};
+		0362424A2FD4356300CCBEF4 /* StripePaymentsUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 036242392FD4356300CCBEF4 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripePaymentsUI;
+		};
+		03BBA44D2FC26B89003AED6F /* StripeTerminal */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03B983442FC12AEC0008662D /* XCRemoteSwiftPackageReference "stripe-terminal-ios" */;
+			productName = StripeTerminal;
+		};
+		03CA44812DB7A51F009981D9 /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03CA44802DB7A51F009981D9 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 030694BA2CB3BD3300E68B25 /* Project object */;
+}

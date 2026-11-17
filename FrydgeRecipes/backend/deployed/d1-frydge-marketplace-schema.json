@@ -1,0 +1,64 @@
+[
+  {
+    "results": [
+      {
+        "name": "_cf_KV",
+        "sql": "CREATE TABLE _cf_KV (\n        key TEXT PRIMARY KEY,\n        value BLOB\n      ) WITHOUT ROWID"
+      },
+      {
+        "name": "idx_order_events_order",
+        "sql": "CREATE INDEX idx_order_events_order\n  ON order_events (order_id, created_at DESC)"
+      },
+      {
+        "name": "idx_orders_buyer",
+        "sql": "CREATE INDEX idx_orders_buyer\n  ON orders (buyer_user_id, created_at DESC)"
+      },
+      {
+        "name": "idx_orders_payment_intent",
+        "sql": "CREATE INDEX idx_orders_payment_intent\n  ON orders (payment_intent_id)"
+      },
+      {
+        "name": "idx_orders_seller",
+        "sql": "CREATE INDEX idx_orders_seller\n  ON orders (seller_user_id, created_at DESC)"
+      },
+      {
+        "name": "order_events",
+        "sql": "CREATE TABLE order_events (\n  id          INTEGER PRIMARY KEY AUTOINCREMENT,\n  order_id    TEXT NOT NULL,\n  event_type  TEXT NOT NULL,   -- created | webhook | seller_ready | buyer_confirmed | ...\n  from_status TEXT,\n  to_status   TEXT,\n  source      TEXT,            -- app | stripe_webhook\n  detail      TEXT,            -- JSON\n  created_at  INTEGER NOT NULL\n)"
+      },
+      {
+        "name": "orders",
+        "sql": "CREATE TABLE orders (\n  id                     TEXT PRIMARY KEY,           -- ord_<uuid>\n  payment_intent_id      TEXT UNIQUE,                -- pi_... (Stripe's ID)\n\n  -- What was bought\n  listing_id             TEXT,\n  listing_title          TEXT,\n  quantity               INTEGER NOT NULL DEFAULT 1,\n\n  -- Who\n  buyer_user_id          TEXT NOT NULL,              -- CloudKit user record name\n  seller_user_id         TEXT,                       -- CloudKit user record name\n  seller_account_id      TEXT,                       -- acct_... Stripe Connect\n\n  -- Money, in cents\n  amount                 INTEGER NOT NULL,\n  currency               TEXT    NOT NULL,\n  platform_fee           INTEGER NOT NULL DEFAULT 0,\n\n  -- Lifecycle\n  --   pending_payment  order created, payment not yet confirmed\n  --   paid             webhook confirmed payment_intent.succeeded\n  --   ready            seller marked it ready / handed over\n  --   received         buyer confirmed receipt — terminal happy path\n  --   cancelled        abandoned before payment\n  --   payment_failed   webhook confirmed failure\n  --   refunded         refunded via Stripe\n  --   disputed         chargeback opened\n  status                 TEXT NOT NULL DEFAULT 'pending_payment',\n\n  -- Raw Stripe status, kept separately so our lifecycle and Stripe's never\n  -- silently disagree without it being visible.\n  stripe_status          TEXT,\n\n  seller_marked_ready_at INTEGER,\n  buyer_confirmed_at     INTEGER,\n\n  created_at             INTEGER NOT NULL,\n  updated_at             INTEGER NOT NULL,\n\n  -- Free-form JSON for anything not worth a column yet.\n  metadata               TEXT\n, channel TEXT)"
+      },
+      {
+        "name": "sqlite_autoindex_orders_1",
+        "sql": null
+      },
+      {
+        "name": "sqlite_autoindex_orders_2",
+        "sql": null
+      },
+      {
+        "name": "sqlite_sequence",
+        "sql": "CREATE TABLE sqlite_sequence(name,seq)"
+      }
+    ],
+    "success": true,
+    "meta": {
+      "served_by": "v3-prod",
+      "served_by_region": "OC",
+      "served_by_colo": "BNE",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 0.2691
+      },
+      "duration": 0.2691,
+      "changes": 0,
+      "last_row_id": 0,
+      "changed_db": false,
+      "size_after": 49152,
+      "rows_read": 20,
+      "rows_written": 0,
+      "total_attempts": 1
+    }
+  }
+]

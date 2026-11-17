@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Whitianga cluster, APPROACH route.
+
+    1 Joan Gaskell Drive, Whitianga 3510
+    Shared centre: -36.8310, 175.7000
+
+    WHAT THIS TESTS: the co-location collapse. FOURTEEN stores in
+    RegionMonitoring.stores sit at exactly this coordinate (New World,
+    Countdown, Four Square, SuperValue, Pak'nSave, FreshChoice, ...).
+    collapsingCoLocated() must reduce them to ONE monitored region — the first
+    in list order, "New World Whitianga" — so this approach must produce
+    exactly ONE didEnterRegion and ONE Live Activity. If you see multiple
+    activities or 14 region slots burned, the collapse has regressed.
+
+    The crossing happens between waypoints 3 and 4.
+
+    USE: Xcode, Debug, Simulate Location, WhitiangaCluster-Approach
+-->
+<gpx version="1.1" creator="Frydge" xmlns="http://www.topografix.com/GPX/1/1">
+
+    <wpt lat="-36.8449" lon="175.7000">
+        <name>Approach 1, outside 1.5 km</name>
+        <time>2026-08-02T09:00:00Z</time>
+    </wpt>
+
+    <wpt lat="-36.8409" lon="175.7000">
+        <name>Approach 2, outside 1.1 km</name>
+        <time>2026-08-02T09:00:10Z</time>
+    </wpt>
+
+    <wpt lat="-36.8389" lon="175.7000">
+        <name>Approach 3, outside 870 m</name>
+        <time>2026-08-02T09:00:20Z</time>
+    </wpt>
+
+    <wpt lat="-36.8369" lon="175.7000">
+        <name>Approach 4, INSIDE 650 m, crossing</name>
+        <time>2026-08-02T09:00:30Z</time>
+    </wpt>
+
+    <wpt lat="-36.8349" lon="175.7000">
+        <name>Approach 5, inside 430 m</name>
+        <time>2026-08-02T09:00:40Z</time>
+    </wpt>
+
+    <wpt lat="-36.8310" lon="175.7000">
+        <name>Whitianga cluster, arrived</name>
+        <time>2026-08-02T09:00:50Z</time>
+    </wpt>
+
+</gpx>

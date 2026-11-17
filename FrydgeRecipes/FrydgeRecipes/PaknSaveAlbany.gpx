@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PAK'nSAVE Albany, STATIC location.
+
+    139 Don McKinnon Drive, Albany, Auckland 0632
+    -36.73013, 174.70716
+
+    Parks the device exactly at the store and leaves it there.
+
+    WHAT THIS TESTS
+
+    NOT didEnterRegion. There is no boundary crossing, so that will not fire.
+    Use PaknSaveAlbany-Approach.gpx for arrival.
+
+    This one exercises the other path: didDetermineState returning .inside,
+    which is how the app recovers when you are already standing in a store, e.g.
+    the Live Activity was dismissed on a previous visit and you never left.
+
+    That path runs from didStartMonitoringFor in AppDelegate. It used to be
+    broken: requestState(for:) was called immediately after startMonitoring,
+    before iOS had begun tracking, so it reliably answered .unknown.
+
+    USE
+
+    Xcode, Debug, Simulate Location, PaknSaveAlbany
+
+    Then force quit and relaunch the app while still simulating this location.
+    That is the scenario the recovery path exists for.
+-->
+<gpx version="1.1" creator="Frydge" xmlns="http://www.topografix.com/GPX/1/1">
+
+    <wpt lat="-36.73013" lon="174.70716">
+        <name>PAK'nSAVE Albany</name>
+    </wpt>
+
+</gpx>

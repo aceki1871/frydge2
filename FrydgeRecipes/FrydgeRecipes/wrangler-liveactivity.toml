@@ -1,0 +1,24 @@
+# Deploy config for the Live Activity push-to-start relay.
+#
+# Deploy:
+#   wrangler deploy -c wrangler-liveactivity.toml
+#
+# Set the secrets once (you'll be prompted for each value):
+#   wrangler secret put APNS_KEY_P8      -c wrangler-liveactivity.toml
+#   wrangler secret put FRYDGE_RELAY_KEY -c wrangler-liveactivity.toml
+#
+# APNS_KEY_P8 is the FULL contents of AuthKey_7XKRGZRVQD.p8, including the
+# -----BEGIN PRIVATE KEY----- and -----END PRIVATE KEY----- lines. Paste it at
+# the prompt. Never commit the .p8 itself — .gitignore already excludes *.p8,
+# and once this secret is set you should move the file out of the repo folder
+# entirely (it is currently sitting in iCloud Drive).
+#
+# FRYDGE_RELAY_KEY must match `relayKey` in LiveActivityPushManager.swift.
+
+name = "frydge2-live-activity"
+main = "cloudflare-worker-live-activity.js"
+compatibility_date = "2026-05-25"
+
+routes = [
+  { pattern = "frydge2.com/live-activity/*", zone_name = "frydge2.com" }
+]

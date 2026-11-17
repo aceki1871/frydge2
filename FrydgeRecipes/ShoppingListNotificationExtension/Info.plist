@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleName</key>
+    <string>$(PRODUCT_NAME)</string>
+    <key>CFBundleDisplayName</key>
+    <string>Shopping List Notifications</string>
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleVersion</key>
+    <string>$(CURRENT_PROJECT_VERSION)</string>
+    <key>CFBundleShortVersionString</key>
+    <string>$(MARKETING_VERSION)</string>
+    <key>CFBundlePackageType</key>
+    <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+    <key>NSExtension</key>
+    <dict>
+        <key>NSExtensionAttributes</key>
+        <dict>
+            <key>UNNotificationExtensionCategory</key>
+            <array>
+                <string>SHOPPING_LIST_CATEGORY</string>
+                <string>EXPIRY_REMINDER</string>
+                <string>SHARED_SHOPPING_LIST_UPDATED</string>
+                <string>SHARED_FRYDGE_UPDATED</string>
+            </array>
+            <key>UNNotificationExtensionInitialContentSizeRatio</key>
+            <real>1.0</real>
+            <key>UNNotificationExtensionDefaultContentHidden</key>
+            <true/>
+            <key>UNNotificationExtensionUserInteractionEnabled</key>
+            <true/>
+        </dict>
+        <key>NSExtensionPointIdentifier</key>
+        <string>com.apple.usernotifications.content-extension</string>
+        <key>NSExtensionPrincipalClass</key>
+        <string>ShoppingListNotificationExtension.NotificationViewController</string>
+        <key>UIMainStoryboardFile</key>
+        <string>MainInterface</string>
+    </dict>
+</dict>
+</plist>

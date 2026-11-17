@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Four Square Ponsonby, APPROACH route.
+
+    254 Ponsonby Road, Ponsonby, Auckland
+    Store centre: -36.8530, 174.7452
+
+    WHAT THIS TESTS: brand coverage. Exercises the "foursquare" logo asset in
+    the Live Activity and a store name with no Woolworths/Countdown aliasing in
+    the price-cache matching. Note Countdown Ponsonby (-36.8562, 174.7456) is
+    only ~360 m away, so its region fires on the same approach — another
+    overlap case, with two different brands racing to start the activity.
+
+    The crossing happens between waypoints 3 and 4.
+
+    USE: Xcode, Debug, Simulate Location, FourSquarePonsonby-Approach
+-->
+<gpx version="1.1" creator="Frydge" xmlns="http://www.topografix.com/GPX/1/1">
+
+    <wpt lat="-36.8669" lon="174.7452">
+        <name>Approach 1, outside 1.5 km</name>
+        <time>2026-08-02T09:00:00Z</time>
+    </wpt>
+
+    <wpt lat="-36.8629" lon="174.7452">
+        <name>Approach 2, outside 1.1 km</name>
+        <time>2026-08-02T09:00:10Z</time>
+    </wpt>
+
+    <wpt lat="-36.8609" lon="174.7452">
+        <name>Approach 3, outside 870 m</name>
+        <time>2026-08-02T09:00:20Z</time>
+    </wpt>
+
+    <wpt lat="-36.8589" lon="174.7452">
+        <name>Approach 4, INSIDE 650 m, crossing</name>
+        <time>2026-08-02T09:00:30Z</time>
+    </wpt>
+
+    <wpt lat="-36.8569" lon="174.7452">
+        <name>Approach 5, inside 430 m</name>
+        <time>2026-08-02T09:00:40Z</time>
+    </wpt>
+
+    <wpt lat="-36.8530" lon="174.7452">
+        <name>Four Square Ponsonby, arrived</name>
+        <time>2026-08-02T09:00:50Z</time>
+    </wpt>
+
+</gpx>

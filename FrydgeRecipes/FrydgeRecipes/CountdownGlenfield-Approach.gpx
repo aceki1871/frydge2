@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Countdown Glenfield, APPROACH route.
+
+    Corner Glenfield Road & Downing Street, Glenfield
+    Store centre: -36.788269, 174.709416
+
+    WHAT THIS TESTS: the clean baseline. Glenfield has no other monitored store
+    within its 800 m radius, so exactly one didEnterRegion should fire and
+    exactly one Live Activity should start, named "Countdown Glenfield".
+    If THIS route is flaky, the problem is in the region/APNs pipeline itself,
+    not in overlap handling.
+
+    The crossing happens between waypoints 3 and 4 (870 m -> 650 m).
+
+    USE: Xcode, Debug, Simulate Location, CountdownGlenfield-Approach
+-->
+<gpx version="1.1" creator="Frydge" xmlns="http://www.topografix.com/GPX/1/1">
+
+    <wpt lat="-36.8021" lon="174.709416">
+        <name>Approach 1, outside 1.5 km</name>
+        <time>2026-08-02T09:00:00Z</time>
+    </wpt>
+
+    <wpt lat="-36.7981" lon="174.709416">
+        <name>Approach 2, outside 1.1 km</name>
+        <time>2026-08-02T09:00:10Z</time>
+    </wpt>
+
+    <wpt lat="-36.7961" lon="174.709416">
+        <name>Approach 3, outside 870 m</name>
+        <time>2026-08-02T09:00:20Z</time>
+    </wpt>
+
+    <wpt lat="-36.7941" lon="174.709416">
+        <name>Approach 4, INSIDE 650 m, crossing</name>
+        <time>2026-08-02T09:00:30Z</time>
+    </wpt>
+
+    <wpt lat="-36.7921" lon="174.709416">
+        <name>Approach 5, inside 430 m</name>
+        <time>2026-08-02T09:00:40Z</time>
+    </wpt>
+
+    <wpt lat="-36.788269" lon="174.709416">
+        <name>Countdown Glenfield, arrived</name>
+        <time>2026-08-02T09:00:50Z</time>
+    </wpt>
+
+</gpx>

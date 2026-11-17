@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PAK'nSAVE Albany, APPROACH route. Use this one for geofence testing.
+
+    139 Don McKinnon Drive, Albany, Auckland 0632
+    Store centre: -36.73013, 174.70716
+
+    WHY A ROUTE AND NOT A SINGLE POINT
+
+    didEnterRegion fires on a BOUNDARY CROSSING, not on being inside a region.
+    Dropping the simulator straight onto the store coordinates usually fires
+    nothing at all, because the device was never observed outside, so nothing
+    was crossed.
+
+    This track starts about 1.5 km south of the store, well outside the 800 m
+    radius in RegionMonitoring.regionRadius, and drives north through the
+    boundary. The crossing happens between waypoints 3 and 4.
+
+        wpt 1   -36.7440   ~1.54 km   outside
+        wpt 2   -36.7400   ~1.10 km   outside
+        wpt 3   -36.7380   ~0.87 km   outside, last point outside
+        wpt 4   -36.7360   ~0.65 km   INSIDE, crossing fires here
+        wpt 5   -36.7340   ~0.43 km   inside
+        wpt 6   -36.73013     0 m     at the store
+
+    USE
+
+    Xcode, Debug, Simulate Location, PaknSaveAlbany-Approach
+
+    Xcode interpolates between waypoints using the time values below, roughly
+    10 s per leg, so about a minute end to end.
+
+    NOTE: "Pak'nSave Albany" must exist in RegionMonitoring.stores or no region
+    is being monitored there and this will do nothing. It has been added.
+-->
+<gpx version="1.1" creator="Frydge" xmlns="http://www.topografix.com/GPX/1/1">
+
+    <wpt lat="-36.7440" lon="174.70716">
+        <name>Approach 1, outside 1.5 km</name>
+        <time>2026-08-02T09:00:00Z</time>
+    </wpt>
+
+    <wpt lat="-36.7400" lon="174.70716">
+        <name>Approach 2, outside 1.1 km</name>
+        <time>2026-08-02T09:00:10Z</time>
+    </wpt>
+
+    <wpt lat="-36.7380" lon="174.70716">
+        <name>Approach 3, outside 870 m</name>
+        <time>2026-08-02T09:00:20Z</time>
+    </wpt>
+
+    <wpt lat="-36.7360" lon="174.70716">
+        <name>Approach 4, INSIDE 650 m, crossing</name>
+        <time>2026-08-02T09:00:30Z</time>
+    </wpt>
+
+    <wpt lat="-36.7340" lon="174.70716">
+        <name>Approach 5, inside 430 m</name>
+        <time>2026-08-02T09:00:40Z</time>
+    </wpt>
+
+    <wpt lat="-36.73013" lon="174.70716">
+        <name>PAK'nSAVE Albany, arrived</name>
+        <time>2026-08-02T09:00:50Z</time>
+    </wpt>
+
+</gpx>

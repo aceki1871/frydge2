@@ -1,0 +1,88 @@
+{
+  "result": {
+    "placement": {},
+    "compatibility_date": "2024-09-01",
+    "compatibility_flags": [],
+    "usage_model": "standard",
+    "tags": [],
+    "tail_consumers": [],
+    "logpush": false,
+    "annotations": {
+      "workers/triggered_by": "version_upload"
+    },
+    "bindings": [
+      {
+        "name": "APNS_KEY_ID",
+        "text": "",
+        "type": "plain_text"
+      },
+      {
+        "name": "APNS_TEAM_ID",
+        "text": "ZL9TGTA3F4",
+        "type": "plain_text"
+      },
+      {
+        "name": "APP_BUNDLE_ID",
+        "text": "com.Clark-Online.Recipe",
+        "type": "plain_text"
+      },
+      {
+        "bucket_name": "frydge-assets",
+        "name": "FRYDGE_ASSETS",
+        "type": "r2_bucket"
+      },
+      {
+        "name": "FRYDGE_CACHE",
+        "namespace_id": "e76bcec71b074b55bcb84385e4120a13",
+        "type": "kv_namespace"
+      },
+      {
+        "database_id": "17ad308f-7929-4a34-aff2-4a2ab279ac42",
+        "id": "17ad308f-7929-4a34-aff2-4a2ab279ac42",
+        "name": "FRYDGE_DB",
+        "type": "d1"
+      },
+      {
+        "name": "FRYDGE_RELAY_KEY",
+        "type": "secret_text"
+      },
+      {
+        "name": "JWT_SECRET",
+        "type": "secret_text"
+      },
+      {
+        "database_id": "a0fcde9b-7c50-408e-8de1-018235bb56a8",
+        "id": "a0fcde9b-7c50-408e-8de1-018235bb56a8",
+        "name": "MARKETPLACE_DB",
+        "type": "d1"
+      },
+      {
+        "name": "MARKETPLACE_WEBHOOK_SECRET",
+        "type": "secret_text"
+      },
+      {
+        "name": "RESEND_API_KEY",
+        "type": "secret_text"
+      },
+      {
+        "name": "STRIPE_CLIENT_ID",
+        "type": "secret_text"
+      },
+      {
+        "name": "STRIPE_PUBLISHABLE_KEY",
+        "type": "secret_text"
+      },
+      {
+        "name": "STRIPE_SECRET_KEY",
+        "type": "secret_text"
+      },
+      {
+        "name": "STRIPE_WEBHOOK_SECRET",
+        "type": "secret_text"
+      }
+    ]
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

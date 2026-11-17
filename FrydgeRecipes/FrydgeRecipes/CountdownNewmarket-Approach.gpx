@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Countdown Newmarket, APPROACH route.
+
+    277 Broadway, Newmarket
+    Store centre: -36.868754, 174.778278
+
+    WHAT THIS TESTS: overlapping regions. Chemist Warehouse Newmarket
+    (-36.8701, 174.7777, ~160 m away) and Pharmacy 277 Newmarket
+    (-36.8695, 174.7772) are separate monitored regions whose 800 m circles
+    almost coincide with this one. All are farther than the 100 m co-location
+    threshold, so they are NOT collapsed. Driving in fires several
+    didEnterRegion callbacks near-simultaneously — watch which store name the
+    Live Activity ends up with, and whether more than one activity starts.
+
+    The crossing happens between waypoints 3 and 4.
+
+    USE: Xcode, Debug, Simulate Location, CountdownNewmarket-Approach
+-->
+<gpx version="1.1" creator="Frydge" xmlns="http://www.topografix.com/GPX/1/1">
+
+    <wpt lat="-36.8826" lon="174.778278">
+        <name>Approach 1, outside 1.5 km</name>
+        <time>2026-08-02T09:00:00Z</time>
+    </wpt>
+
+    <wpt lat="-36.8786" lon="174.778278">
+        <name>Approach 2, outside 1.1 km</name>
+        <time>2026-08-02T09:00:10Z</time>
+    </wpt>
+
+    <wpt lat="-36.8766" lon="174.778278">
+        <name>Approach 3, outside 870 m</name>
+        <time>2026-08-02T09:00:20Z</time>
+    </wpt>
+
+    <wpt lat="-36.8746" lon="174.778278">
+        <name>Approach 4, INSIDE 650 m, crossing</name>
+        <time>2026-08-02T09:00:30Z</time>
+    </wpt>
+
+    <wpt lat="-36.8726" lon="174.778278">
+        <name>Approach 5, inside 430 m</name>
+        <time>2026-08-02T09:00:40Z</time>
+    </wpt>
+
+    <wpt lat="-36.868754" lon="174.778278">
+        <name>Countdown Newmarket, arrived</name>
+        <time>2026-08-02T09:00:50Z</time>
+    </wpt>
+
+</gpx>

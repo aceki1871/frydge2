@@ -1,0 +1,10 @@
+name = "frydge2-recipe-sharing"
+main = "cloudflare-worker-recipe-sharing.js"
+compatibility_date = "2026-05-25"
+
+routes = [
+  { pattern = "frydge2.com/.well-known/*", zone_name = "frydge2.com" },
+  { pattern = "frydge2.com/api/share-recipe", zone_name = "frydge2.com" },
+  { pattern = "frydge2.com/recipe/*", zone_name = "frydge2.com" },
+  { pattern = "frydge2.com/images/*", zone_name = "frydge2.com" }
+]

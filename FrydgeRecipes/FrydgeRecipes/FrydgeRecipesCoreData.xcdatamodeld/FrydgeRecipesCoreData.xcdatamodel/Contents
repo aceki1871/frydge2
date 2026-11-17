@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="24A335" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <!--
+        CloudKit mirroring rules this model must obey (NSPersistentCloudKitContainer):
+          1. Every attribute is optional, or has a default value.
+          2. Every relationship is optional and has an inverse.
+          3. No unique constraints anywhere.
+          4. No "Deny" delete rules.
+        Breaking any of these makes loadPersistentStores fail at launch.
+
+        Deletion is a SYNCED FACT here (deletedAt), not a local UserDefaults
+        tombstone — that design is what let deleted fridge items resurrect.
+    -->
+    <entity name="FrydgeRecipe" representedClassName="FrydgeRecipe" syncable="YES" codeGenerationType="class">
+        <attribute name="cloudKitID" optional="YES" attributeType="String"/>
+        <attribute name="ingredients" optional="YES" attributeType="String"/>
+        <attribute name="instructions" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="pans" optional="YES" attributeType="String"/>
+        <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="CDFridgeItem" representedClassName="CDFridgeItem" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="quantity" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="unit" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="expirationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="location" optional="YES" attributeType="String" defaultValueString="Fridge"/>
+        <!-- Set&lt;String&gt; is not CloudKit-mirrorable; stored as a JSON array string. -->
+        <attribute name="dietaryTagsJSON" optional="YES" attributeType="String" defaultValueString="[]"/>
+        <attribute name="lifecycleRaw" optional="YES" attributeType="String" defaultValueString="fridge"/>
+        <attribute name="quantityUsed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <!-- Soft delete. Non-nil = deleted. Replaces the per-device UserDefaults tombstones. -->
+        <attribute name="deletedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDItemPhoto" inverseName="fridgeItem" inverseEntity="CDItemPhoto"/>
+    </entity>
+    <entity name="CDShoppingItem" representedClassName="CDShoppingItem" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="quantity" optional="YES" attributeType="String" defaultValueString="1"/>
+        <attribute name="unit" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="location" optional="YES" attributeType="String" defaultValueString="Shopping"/>
+        <attribute name="dietaryTagsJSON" optional="YES" attributeType="String" defaultValueString="[]"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="deletedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDItemPhoto" inverseName="shoppingItem" inverseEntity="CDItemPhoto"/>
+    </entity>
+    <!--
+        Photos live in their OWN entity with external binary storage so that
+        editing an item's name does not re-upload megabytes of JPEG data — the
+        failure mode of the old whole-list CKAsset blob.
+    -->
+    <entity name="CDItemPhoto" representedClassName="CDItemPhoto" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="data" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="sortIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="fridgeItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDFridgeItem" inverseName="photos" inverseEntity="CDFridgeItem"/>
+        <relationship name="shoppingItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDShoppingItem" inverseName="photos" inverseEntity="CDShoppingItem"/>
+    </entity>
+    <!--
+        Weekly planner. Same CloudKit-mirroring rules as everything above:
+        every attribute optional/defaulted, no unique constraints, soft delete
+        via deletedAt. Ingredient lines and dietary tags are JSON array strings
+        because [String] / Set<String> are not mirrorable.
+    -->
+    <entity name="CDPlannedRecipe" representedClassName="CDPlannedRecipe" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="dayIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="recipeID" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="recipeName" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="ingredientsJSON" optional="YES" attributeType="String" defaultValueString="[]"/>
+        <attribute name="dietaryTagsJSON" optional="YES" attributeType="String" defaultValueString="[]"/>
+        <attribute name="serves" optional="YES" attributeType="String" defaultValueString="4"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="deletedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="CDRecurringItem" representedClassName="CDRecurringItem" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="quantity" optional="YES" attributeType="String" defaultValueString="1"/>
+        <attribute name="unit" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="intervalRaw" optional="YES" attributeType="String" defaultValueString="monthly"/>
+        <attribute name="lastAddedToList" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="deletedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+</model>

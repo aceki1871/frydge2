@@ -1,0 +1,81 @@
+# frydge-api — the single Worker that serves the app's /marketplace/* and
+# /stripe/* routes plus the portal /api/* routes.
+#
+# Bindings below mirror what the Cloudflare dashboard reported for the deployed
+# Worker on 2 Nov 2026 (see ../deployed/frydge-api/settings.redacted.json).
+# Secrets are NOT in this file; set them per environment with
+#   wrangler secret put <NAME> [--env staging]
+# Required secrets: FRYDGE_RELAY_KEY, JWT_SECRET, MARKETPLACE_WEBHOOK_SECRET,
+#   RESEND_API_KEY, STRIPE_CLIENT_ID, STRIPE_PUBLISHABLE_KEY, STRIPE_SECRET_KEY,
+#   STRIPE_WEBHOOK_SECRET
+#
+# DO NOT `wrangler deploy` to production from this file until Josh has
+# confirmed the staging run (see README.md). Production deploy requires the
+# D1 migration 002 to have been applied first.
+
+name = "frydge-api"
+main = "src/index.js"
+compatibility_date = "2024-09-01"
+
+[vars]
+APNS_KEY_ID = ""
+APNS_TEAM_ID = "ZL9TGTA3F4"
+APP_BUNDLE_ID = "com.Clark-Online.Recipe"
+# Server-side marketplace kill switch. Anything other than "true" refuses
+# order creation and tells the app the marketplace is off.
+MARKETPLACE_ENABLED = "false"
+
+[[d1_databases]]
+binding = "FRYDGE_DB"
+database_name = "frydge-production"
+database_id = "17ad308f-7929-4a34-aff2-4a2ab279ac42"
+
+[[d1_databases]]
+binding = "MARKETPLACE_DB"
+database_name = "frydge-marketplace"
+database_id = "a0fcde9b-7c50-408e-8de1-018235bb56a8"
+migrations_dir = "migrations"
+
+[[kv_namespaces]]
+binding = "FRYDGE_CACHE"
+id = "e76bcec71b074b55bcb84385e4120a13"
+
+[[r2_buckets]]
+binding = "FRYDGE_ASSETS"
+bucket_name = "frydge-assets"
+
+# ---------------------------------------------------------------------------
+# Staging: isolated databases and test-mode Stripe keys. Create the resources
+# once, paste the ids here, then:
+#   wrangler d1 execute frydge-marketplace-staging --env staging --remote --file migrations/001-baseline.sql
+#   wrangler d1 execute frydge-marketplace-staging --env staging --remote --file migrations/002-attempts-and-events.sql
+#   wrangler deploy --env staging
+# ---------------------------------------------------------------------------
+[env.staging]
+name = "frydge-api-staging"
+workers_dev = true
+
+[env.staging.vars]
+APNS_KEY_ID = ""
+APNS_TEAM_ID = "ZL9TGTA3F4"
+APP_BUNDLE_ID = "com.Clark-Online.Recipe"
+MARKETPLACE_ENABLED = "true"
+
+[[env.staging.d1_databases]]
+binding = "FRYDGE_DB"
+database_name = "frydge-production-staging"
+database_id = "REPLACE_WITH_STAGING_D1_ID"
+
+[[env.staging.d1_databases]]
+binding = "MARKETPLACE_DB"
+database_name = "frydge-marketplace-staging"
+database_id = "REPLACE_WITH_STAGING_D1_ID"
+migrations_dir = "migrations"
+
+[[env.staging.kv_namespaces]]
+binding = "FRYDGE_CACHE"
+id = "REPLACE_WITH_STAGING_KV_ID"
+
+[[env.staging.r2_buckets]]
+binding = "FRYDGE_ASSETS"
+bucket_name = "frydge-assets-staging"

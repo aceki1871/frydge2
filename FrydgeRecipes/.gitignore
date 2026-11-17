@@ -1,0 +1,55 @@
+# macOS
+.DS_Store
+
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# CocoaPods / Carthage (if ever used)
+Pods/
+Carthage/Build/
+
+# Secrets & credentials — must never be committed
+*.p12
+*.p8
+*.pem
+*.mobileprovision
+*.cer
+*.certSigningRequest
+.env
+.env.*
+secrets.plist
+# Cloudflare Wrangler local state (cache only; wrangler.toml config is kept)
+.wrangler/
+
+# Claude Code local files
+.claude/
+
+# Node (Cloudflare workers tooling)
+node_modules/
+
+# Non-source material kept alongside the project but not versioned
+.dnd-refactor-backup/
+1.0/
+ui experience/
+business/
+frydge-android.zip
+products.db.lzfse
+# Loose screenshots and store logos at the repo root (not referenced by the project)
+/*.jpg
+/*.jpeg
+/*.png
+/*.PNG

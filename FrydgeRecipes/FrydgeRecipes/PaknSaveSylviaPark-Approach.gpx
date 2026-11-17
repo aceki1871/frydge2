@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Pak'nSave Sylvia Park, APPROACH route.
+
+    286 Mount Wellington Highway, Mount Wellington
+    Store centre: -36.911732, 174.840478
+
+    WHAT THIS TESTS: the Mt Wellington area that WoolworthsMtWellington.gpx
+    points at. That older file has no matching entry in
+    RegionMonitoring.stores ("Woolworths Mt Wellington" is not in the list) —
+    it only ever worked by overlapping this store's 800 m circle. This route
+    targets the store that IS monitored. Also exercises Pak'nSave logo +
+    price matching.
+
+    The crossing happens between waypoints 3 and 4.
+
+    USE: Xcode, Debug, Simulate Location, PaknSaveSylviaPark-Approach
+-->
+<gpx version="1.1" creator="Frydge" xmlns="http://www.topografix.com/GPX/1/1">
+
+    <wpt lat="-36.9256" lon="174.840478">
+        <name>Approach 1, outside 1.5 km</name>
+        <time>2026-08-02T09:00:00Z</time>
+    </wpt>
+
+    <wpt lat="-36.9216" lon="174.840478">
+        <name>Approach 2, outside 1.1 km</name>
+        <time>2026-08-02T09:00:10Z</time>
+    </wpt>
+
+    <wpt lat="-36.9196" lon="174.840478">
+        <name>Approach 3, outside 870 m</name>
+        <time>2026-08-02T09:00:20Z</time>
+    </wpt>
+
+    <wpt lat="-36.9176" lon="174.840478">
+        <name>Approach 4, INSIDE 650 m, crossing</name>
+        <time>2026-08-02T09:00:30Z</time>
+    </wpt>
+
+    <wpt lat="-36.9156" lon="174.840478">
+        <name>Approach 5, inside 430 m</name>
+        <time>2026-08-02T09:00:40Z</time>
+    </wpt>
+
+    <wpt lat="-36.911732" lon="174.840478">
+        <name>Pak'nSave Sylvia Park, arrived</name>
+        <time>2026-08-02T09:00:50Z</time>
+    </wpt>
+
+</gpx>
