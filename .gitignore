@@ -1,0 +1,13 @@
+.gradle/
+build/
+**/build/
+*.apk
+*.aab
+local.properties
+*.jks
+*.keystore
+.DS_Store
+DerivedData/
+xcuserdata/
+Pods/
+node_modules/
